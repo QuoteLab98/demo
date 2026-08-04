@@ -4,278 +4,67 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>QuoteLab Demo Gallery | 操作デモ一覧</title>
-<meta name="description" content="QuoteLabが制作した料金シミュレーター・見積フォームの操作デモ一覧です。リフォーム、引越しなど業種別のデモをブラウザ上で体験できます。">
+<meta name="description" content="QuoteLabの高機能料金シミュレーター、リフォーム概算、引越し料金の操作デモ一覧です。">
 <meta name="theme-color" content="#1769d2">
 <style>
-:root{
-  --blue:#1769d2;--blue2:#4da3ff;--orange:#ff9a2f;--navy:#0d1b2a;
-  --text:#1f2937;--muted:#667085;--line:#dce6f2;--bg:#f5f8fc;
-  --white:#fff;--shadow:0 20px 60px rgba(13,27,42,.12)
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
-  color:var(--text);background:var(--bg);line-height:1.7;
-}
-a{text-decoration:none;color:inherit}
+:root{--blue:#1769d2;--blue2:#4da3ff;--orange:#ff9a2f;--navy:#0d1b2a;--text:#1f2937;--muted:#667085;--line:#dce6f2;--bg:#f5f8fc;--white:#fff;--shadow:0 20px 60px rgba(13,27,42,.12)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;color:var(--text);background:var(--bg);line-height:1.7}a{text-decoration:none;color:inherit}
 .topnote{background:var(--navy);color:#fff;text-align:center;padding:8px 16px;font-size:12px}
-header{
-  position:sticky;top:0;z-index:30;
-  background:rgba(255,255,255,.94);backdrop-filter:blur(15px);
-  border-bottom:1px solid var(--line)
-}
-.header{
-  max-width:1180px;margin:auto;padding:14px 24px;
-  display:flex;justify-content:space-between;align-items:center;gap:18px
-}
-.brand{display:flex;align-items:center;gap:12px;font-weight:900;color:var(--navy)}
-.mark{
-  width:46px;height:46px;border-radius:15px;display:grid;place-items:center;
-  background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;
-  font-size:28px;box-shadow:0 10px 24px rgba(23,105,210,.25)
-}
-.brand small{display:block;color:var(--blue);font-size:10px;letter-spacing:.12em}
-.headerlinks{display:flex;gap:10px}
-.headerlinks a{
-  padding:10px 14px;border-radius:12px;border:1px solid var(--line);
-  background:#fff;font-size:12px;font-weight:900
-}
-.headerlinks .primary{background:var(--blue);border-color:var(--blue);color:#fff}
-
-.hero{
-  background:
-    radial-gradient(circle at 82% 20%,rgba(77,163,255,.22),transparent 28%),
-    radial-gradient(circle at 12% 82%,rgba(255,154,47,.14),transparent 26%),
-    linear-gradient(135deg,#eef6ff,#fff 48%,#fff8ed);
-  border-bottom:1px solid var(--line)
-}
-.hero-inner{
-  max-width:1180px;margin:auto;padding:88px 24px 70px;
-  display:grid;grid-template-columns:1.06fr .94fr;gap:48px;align-items:center
-}
-.eyebrow{color:var(--blue);font-size:12px;font-weight:900;letter-spacing:.14em}
-h1{
-  margin:14px 0 18px;color:var(--navy);
-  font-size:clamp(42px,6.2vw,70px);line-height:1.05;letter-spacing:-.045em
-}
-.hero p{margin:0;color:var(--muted);font-size:17px;max-width:700px}
-.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;
-  min-height:50px;padding:0 20px;border-radius:14px;font-weight:900;
-  border:1px solid transparent;transition:.2s
-}
-.btn:hover{transform:translateY(-2px)}
-.btn-primary{background:linear-gradient(135deg,var(--blue),#0f5ec2);color:#fff;box-shadow:0 14px 30px rgba(23,105,210,.26)}
-.btn-secondary{background:#fff;color:var(--navy);border-color:var(--line)}
-
-.showcase{
-  background:#fff;border:1px solid var(--line);border-radius:30px;
-  padding:22px;box-shadow:var(--shadow)
-}
-.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.mini{
-  min-height:180px;border-radius:20px;padding:18px;position:relative;overflow:hidden
-}
-.mini.reform{background:linear-gradient(145deg,#eaf6ff,#e7f3e5)}
-.mini.moving{background:linear-gradient(145deg,#eef6ff,#fff0dc)}
-.mini span{display:block;color:var(--blue);font-size:11px;font-weight:900;letter-spacing:.08em}
-.mini strong{display:block;margin-top:6px;color:var(--navy);font-size:18px}
-.mini .emoji{position:absolute;right:15px;bottom:8px;font-size:74px;filter:drop-shadow(0 12px 14px rgba(13,27,42,.13))}
-.showcase-note{margin-top:14px;padding:12px 14px;border-radius:13px;background:#eef8f4;color:#0d7855;border:1px solid #c7eadc;font-size:12px;font-weight:900}
-
-.section{max-width:1180px;margin:auto;padding:82px 24px}
-.title{text-align:center;margin-bottom:38px}
-.title span{color:var(--blue);font-size:12px;font-weight:900;letter-spacing:.14em}
-.title h2{margin:8px 0 10px;color:var(--navy);font-size:clamp(30px,4.4vw,46px)}
-.title p{margin:0 auto;max-width:760px;color:var(--muted)}
-
-.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
-.card{
-  background:#fff;border:1px solid var(--line);border-radius:26px;
-  overflow:hidden;box-shadow:0 12px 38px rgba(13,27,42,.08)
-}
-.cover{height:240px;display:grid;place-items:center;position:relative}
-.cover.reform{background:linear-gradient(145deg,#eaf6ff,#e7f3e5)}
-.cover.moving{background:linear-gradient(145deg,#eef6ff,#fff0dc)}
-.cover .emoji{font-size:104px;filter:drop-shadow(0 18px 18px rgba(13,27,42,.16))}
-.number{position:absolute;left:18px;top:16px;padding:5px 9px;border-radius:999px;background:rgba(255,255,255,.9);color:var(--blue);font-size:11px;font-weight:900}
-.cardbody{padding:26px}
-.cardbody h3{margin:0 0 8px;color:var(--navy);font-size:25px}
-.cardbody p{margin:0 0 17px;color:var(--muted);font-size:14px}
-.tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px}
-.tags span{padding:5px 8px;border-radius:999px;background:#eef6ff;color:var(--blue);border:1px solid #d4e7fb;font-size:11px;font-weight:900}
-.cardactions{display:flex;gap:10px;flex-wrap:wrap}
-.cardactions .btn{min-height:44px;padding:0 16px;font-size:13px}
-
-.dark{background:linear-gradient(135deg,#0d1b2a,#12365d);color:#fff}
-.dark .title h2{color:#fff}.dark .title p{color:#c9d7e7}
-.industry-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.industry{
-  padding:20px;border-radius:18px;background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.12)
-}
-.industry b{display:block;margin:7px 0 4px}
-.industry p{margin:0;color:#c9d7e7;font-size:12px}
-
-.cta{max-width:1132px;margin:0 auto 84px;padding:0 24px}
-.ctabox{
-  text-align:center;color:#fff;padding:48px 28px;border-radius:30px;
-  background:radial-gradient(circle at 85% 20%,rgba(255,255,255,.14),transparent 25%),linear-gradient(135deg,var(--blue),var(--navy));
-  box-shadow:var(--shadow)
-}
-.ctabox h2{margin:0 0 10px;font-size:clamp(30px,4.4vw,44px)}
-.ctabox p{margin:0 auto 22px;max-width:720px;color:#d7e6f8}
-
-footer{background:var(--navy);color:#fff}
-.footer{max-width:1180px;margin:auto;padding:32px 24px;display:flex;justify-content:space-between;align-items:center;gap:20px}
-.footer small{color:#aebfd1}
-
-@media(max-width:960px){
-  .hero-inner,.gallery{grid-template-columns:1fr}
-  .industry-grid{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:640px){
-  .header{padding:12px 16px}.headerlinks a:first-child{display:none}
-  .hero-inner{padding:58px 18px 46px}.section{padding:64px 18px}
-  .mini-grid,.industry-grid{grid-template-columns:1fr}
-  .cta{padding:0 18px}.ctabox{padding:36px 20px}
-  .footer{flex-direction:column;text-align:center}
-}
+header{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.94);backdrop-filter:blur(15px);border-bottom:1px solid var(--line)}
+.header{max-width:1180px;margin:auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:18px}.brand{display:flex;align-items:center;gap:12px;font-weight:900;color:var(--navy)}
+.mark{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;font-size:28px;box-shadow:0 10px 24px rgba(23,105,210,.25)}
+.brand small{display:block;color:var(--blue);font-size:10px;letter-spacing:.12em}.headerlinks{display:flex;gap:10px}.headerlinks a{padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:#fff;font-size:12px;font-weight:900}.headerlinks .primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.hero{background:radial-gradient(circle at 82% 20%,rgba(77,163,255,.22),transparent 28%),radial-gradient(circle at 12% 82%,rgba(255,154,47,.14),transparent 26%),linear-gradient(135deg,#eef6ff,#fff 48%,#fff8ed);border-bottom:1px solid var(--line)}
+.hero-inner{max-width:1180px;margin:auto;padding:84px 24px 66px;display:grid;grid-template-columns:1.06fr .94fr;gap:48px;align-items:center}.eyebrow{color:var(--blue);font-size:12px;font-weight:900;letter-spacing:.14em}
+h1{margin:14px 0 18px;color:var(--navy);font-size:clamp(42px,6.2vw,70px);line-height:1.05;letter-spacing:-.045em}.hero p{margin:0;color:var(--muted);font-size:17px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 19px;border-radius:14px;font-weight:900;border:1px solid transparent;transition:.2s}.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:linear-gradient(135deg,var(--blue),#0f5ec2);color:#fff;box-shadow:0 14px 30px rgba(23,105,210,.26)}.btn-secondary{background:#fff;color:var(--navy);border-color:var(--line)}
+.showcase{background:#fff;border:1px solid var(--line);border-radius:30px;padding:22px;box-shadow:var(--shadow)}.mini-feature{padding:24px;border-radius:22px;background:linear-gradient(135deg,#0d2949,#1769d2);color:#fff;position:relative;overflow:hidden}.mini-feature:after{content:"★";position:absolute;right:18px;top:8px;font-size:88px;color:rgba(255,255,255,.09)}
+.mini-feature span{font-size:11px;font-weight:900;letter-spacing:.12em;color:#ffd07b}.mini-feature strong{display:block;font-size:25px;margin:6px 0}.mini-feature p{color:#d8e7f7;font-size:12px;margin:0}
+.mini-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}.mini{min-height:115px;border-radius:18px;padding:15px;position:relative;overflow:hidden}.mini.reform{background:linear-gradient(145deg,#eaf6ff,#e7f3e5)}.mini.moving{background:linear-gradient(145deg,#eef6ff,#fff0dc)}.mini b{color:var(--navy);font-size:14px}.mini em{position:absolute;right:10px;bottom:2px;font-style:normal;font-size:50px}
+.section{max-width:1180px;margin:auto;padding:80px 24px}.title{text-align:center;margin-bottom:38px}.title span{color:var(--blue);font-size:12px;font-weight:900;letter-spacing:.14em}.title h2{margin:8px 0 10px;color:var(--navy);font-size:clamp(30px,4.4vw,46px)}.title p{margin:0 auto;max-width:760px;color:var(--muted)}
+.featured{display:grid;grid-template-columns:.9fr 1.1fr;gap:28px;align-items:center;background:linear-gradient(135deg,#0d2949,#1769d2);border-radius:30px;padding:34px;color:#fff;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.featured:after{content:"FEATURED";position:absolute;right:-20px;top:22px;font-size:72px;font-weight:950;color:rgba(255,255,255,.045);transform:rotate(8deg)}
+.featured-visual{min-height:330px;border-radius:23px;background:#fff;padding:20px;position:relative}.browser{display:flex;gap:7px;margin-bottom:14px}.browser i{width:9px;height:9px;border-radius:50%;background:#cbd5e1}.screen{border:1px solid var(--line);border-radius:17px;padding:17px}.line{height:36px;border:1px solid var(--line);border-radius:9px;margin:9px 0;background:#f7faff}.result{padding:15px;border-radius:13px;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff}.result strong{display:block;font-size:29px}
+.featured-copy span{display:inline-flex;padding:6px 10px;border-radius:999px;background:rgba(255,154,47,.18);border:1px solid rgba(255,184,100,.4);color:#ffd294;font-size:11px;font-weight:900;letter-spacing:.08em}.featured-copy h3{font-size:35px;margin:12px 0 10px}.featured-copy p{color:#d8e7f7;margin:0 0 18px}.tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px}.tags b{padding:5px 8px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);font-size:11px}
+.subgallery{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:28px}.card{background:#fff;border:1px solid var(--line);border-radius:25px;overflow:hidden;box-shadow:0 12px 38px rgba(13,27,42,.08)}.cover{height:220px;display:grid;place-items:center;position:relative}.cover.reform{background:linear-gradient(145deg,#eaf6ff,#e7f3e5)}.cover.moving{background:linear-gradient(145deg,#eef6ff,#fff0dc)}.cover .emoji{font-size:96px;filter:drop-shadow(0 17px 18px rgba(13,27,42,.15))}.number{position:absolute;left:17px;top:15px;padding:5px 9px;border-radius:999px;background:rgba(255,255,255,.92);color:var(--blue);font-size:11px;font-weight:900}.cardbody{padding:25px}.cardbody h3{margin:0 0 8px;color:var(--navy);font-size:24px}.cardbody p{margin:0 0 16px;color:var(--muted);font-size:14px}.cardtags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:19px}.cardtags span{padding:5px 8px;border-radius:999px;background:#eef6ff;color:var(--blue);border:1px solid #d4e7fb;font-size:11px;font-weight:900}
+.dark{background:linear-gradient(135deg,#0d1b2a,#12365d);color:#fff}.dark .title h2{color:#fff}.dark .title p{color:#c9d7e7}.industry-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.industry{padding:20px;border-radius:18px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12)}.industry b{display:block;margin:7px 0 4px}.industry p{margin:0;color:#c9d7e7;font-size:12px}
+.cta{max-width:1132px;margin:0 auto 82px;padding:0 24px}.ctabox{text-align:center;color:#fff;padding:48px 28px;border-radius:30px;background:linear-gradient(135deg,var(--blue),var(--navy));box-shadow:var(--shadow)}.ctabox h2{margin:0 0 10px;font-size:clamp(30px,4.4vw,44px)}.ctabox p{margin:0 auto 22px;max-width:720px;color:#d7e6f8}
+footer{background:var(--navy);color:#fff}.footer{max-width:1180px;margin:auto;padding:32px 24px;display:flex;justify-content:space-between;align-items:center;gap:20px}.footer small{color:#aebfd1}
+@media(max-width:960px){.hero-inner,.featured,.subgallery{grid-template-columns:1fr}.industry-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:640px){.header{padding:12px 16px}.headerlinks a:first-child{display:none}.hero-inner{padding:56px 18px 44px}.section{padding:62px 18px}.mini-row,.industry-grid{grid-template-columns:1fr}.featured{padding:22px}.featured-copy h3{font-size:29px}.cta{padding:0 18px}.ctabox{padding:36px 20px}.footer{flex-direction:column;text-align:center}}
 </style>
 </head>
 <body>
-<div class="topnote">QuoteLabオリジナルの操作デモ一覧です。掲載価格・条件はすべて架空です。</div>
+<div class="topnote">QuoteLabオリジナルの操作デモ一覧です。掲載価格・商品・条件はすべて架空です。</div>
+<header><div class="header">
+<a class="brand" href="https://quotelab98.github.io/"><div class="mark">Q</div><div>QuoteLab<small>DEMO SHOWROOM</small></div></a>
+<div class="headerlinks"><a href="https://quotelab98.github.io/">公式サイトへ</a><a class="primary" href="https://coconala.com/services/4339390" target="_blank" rel="noopener noreferrer">ココナラで相談</a></div>
+</div></header>
 
-<header>
-  <div class="header">
-    <a class="brand" href="https://quotelab98.github.io/">
-      <div class="mark">Q</div>
-      <div>QuoteLab<small>DEMO GALLERY</small></div>
-    </a>
-    <div class="headerlinks">
-      <a href="https://quotelab98.github.io/">公式サイトへ</a>
-      <a class="primary" href="https://coconala.com/services/4339390" target="_blank" rel="noopener noreferrer">ココナラで相談</a>
-    </div>
-  </div>
-</header>
-
-<section class="hero">
-  <div class="hero-inner">
-    <div>
-      <div class="eyebrow">QUOTE LAB SHOWROOM</div>
-      <h1>実際に触って試せる<br>料金シミュレーター。</h1>
-      <p>業種ごとの料金計算や条件分岐を、ブラウザ上でそのまま体験できます。QuoteLabが制作できる機能と操作感をご覧ください。</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="#demos">デモを見る</a>
-        <a class="btn btn-secondary" href="https://quotelab98.github.io/">公式サイトへ戻る</a>
-      </div>
-    </div>
-
-    <div class="showcase">
-      <div class="mini-grid">
-        <div class="mini reform">
-          <span>DEMO 01</span>
-          <strong>リフォーム概算</strong>
-          <div class="emoji">🏠</div>
-        </div>
-        <div class="mini moving">
-          <span>DEMO 02</span>
-          <strong>引越し料金</strong>
-          <div class="emoji">🚚</div>
-        </div>
-      </div>
-      <div class="showcase-note">リアルタイム計算・条件分岐・割引・PDF保存などを確認できます。</div>
-    </div>
-  </div>
-</section>
+<section class="hero"><div class="hero-inner">
+<div><div class="eyebrow">QUOTE LAB SHOWROOM</div><h1>実際に触って試せる<br>3つの料金デモ。</h1><p>QuoteLabの代表的な計算ロジックと操作感を、業種別のブラウザデモでご確認いただけます。</p><div class="hero-actions"><a class="btn btn-primary" href="#featured">代表デモを見る</a><a class="btn btn-secondary" href="https://quotelab98.github.io/">公式サイトへ戻る</a></div></div>
+<div class="showcase"><div class="mini-feature"><span>FEATURED DEMO</span><strong>高機能料金シミュレーター</strong><p>ロット単価・複数割引・クーポン・PDF保存</p></div><div class="mini-row"><div class="mini reform"><b>リフォーム概算</b><em>🏠</em></div><div class="mini moving"><b>引越し料金</b><em>🚚</em></div></div></div>
+</div></section>
 
 <main>
-<section class="section" id="demos">
-  <div class="title">
-    <span>LIVE DEMOS</span>
-    <h2>業種別デモ</h2>
-    <p>各デモはQuoteLabが独自に制作した架空のサンプルです。実際のサービスや企業データは使用していません。</p>
-  </div>
+<section class="section" id="featured">
+<div class="title"><span>FEATURED DEMO</span><h2>QuoteLabの代表デモ</h2><p>最も多くの機能を搭載したフルスペック版です。まずはこちらをご覧ください。</p></div>
+<article class="featured">
+<div class="featured-visual"><div class="browser"><i></i><i></i><i></i></div><div class="screen"><b style="color:var(--navy)">高機能料金シミュレーター</b><div class="line"></div><div class="line"></div><div class="line"></div><div class="result"><small>概算合計</small><strong>126,840円</strong><span>割引・オプション反映済み</span></div></div></div>
+<div class="featured-copy"><span>★ FEATURED</span><h3>高機能料金シミュレーター</h3><p>商品、サイズ、数量、加工、固定料金、数量連動料金、割合加算、複数割引、クーポン、最低注文金額までを一つの画面で確認できます。</p><div class="tags"><b>ロット別単価</b><b>条件分岐</b><b>複数割引</b><b>クーポン上限</b><b>PDF保存</b></div><div class="hero-actions"><a class="btn btn-secondary" href="./featured/">代表デモを操作する</a><a class="btn btn-secondary" href="https://coconala.com/services/4339390" target="_blank" rel="noopener noreferrer">制作を相談</a></div></div>
+</article>
 
-  <div class="gallery">
-    <article class="card">
-      <div class="cover reform">
-        <span class="number">DEMO 01</span>
-        <div class="emoji">🏠</div>
-      </div>
-      <div class="cardbody">
-        <h3>リフォーム概算シミュレーター</h3>
-        <p>建物タイプ、面積、壁紙、床材、水回り設備、追加工事を選択すると、概算費用と内訳がリアルタイムに更新されます。</p>
-        <div class="tags">
-          <span>面積連動</span><span>設備オプション</span><span>割合加算</span><span>自動割引</span><span>PDF保存</span>
-        </div>
-        <div class="cardactions">
-          <a class="btn btn-primary" href="./reform/">デモを操作する</a>
-          <a class="btn btn-secondary" href="https://coconala.com/services/4339390" target="_blank" rel="noopener noreferrer">制作を相談</a>
-        </div>
-      </div>
-    </article>
-
-    <article class="card">
-      <div class="cover moving">
-        <span class="number">DEMO 02</span>
-        <div class="emoji">🚚</div>
-      </div>
-      <div class="cardbody">
-        <h3>引越し料金シミュレーター</h3>
-        <p>間取り、移動距離、荷物量、建物条件、希望日、オプションから、概算料金と各種割引を自動計算します。</p>
-        <div class="tags">
-          <span>距離連動</span><span>建物条件</span><span>日程加算</span><span>複数割引</span><span>PDF保存</span>
-        </div>
-        <div class="cardactions">
-          <a class="btn btn-primary" href="./moving/">デモを操作する</a>
-          <a class="btn btn-secondary" href="https://coconala.com/services/4339390" target="_blank" rel="noopener noreferrer">制作を相談</a>
-        </div>
-      </div>
-    </article>
-  </div>
+<div class="subgallery">
+<article class="card"><div class="cover reform"><span class="number">DEMO 02</span><div class="emoji">🏠</div></div><div class="cardbody"><h3>リフォーム概算シミュレーター</h3><p>建物タイプ、面積、内装、水回り設備、追加工事を選択すると、概算費用と内訳を自動計算します。</p><div class="cardtags"><span>面積連動</span><span>設備オプション</span><span>割合加算</span><span>自動割引</span></div><div class="hero-actions"><a class="btn btn-primary" href="./reform/">デモを操作する</a><a class="btn btn-secondary" href="https://coconala.com/services/4339390" target="_blank" rel="noopener noreferrer">制作を相談</a></div></div></article>
+<article class="card"><div class="cover moving"><span class="number">DEMO 03</span><div class="emoji">🚚</div></div><div class="cardbody"><h3>引越し料金シミュレーター</h3><p>間取り、距離、荷物量、建物条件、日程、オプションから、概算料金と各種割引を自動計算します。</p><div class="cardtags"><span>距離連動</span><span>建物条件</span><span>日程加算</span><span>複数割引</span></div><div class="hero-actions"><a class="btn btn-primary" href="./moving/">デモを操作する</a><a class="btn btn-secondary" href="https://coconala.com/services/4339390" target="_blank" rel="noopener noreferrer">制作を相談</a></div></div></article>
+</div>
 </section>
 
-<section class="dark">
-  <div class="section">
-    <div class="title">
-      <span>SUPPORTED IDEAS</span>
-      <h2>幅広い業種に応用できます</h2>
-      <p>料金表や計算条件に合わせて、入力項目・デザイン・ロジックを個別に設計します。</p>
-    </div>
-    <div class="industry-grid">
-      <div class="industry">🏠<b>住宅・リフォーム</b><p>面積、設備、工事内容を組み合わせた概算。</p></div>
-      <div class="industry">🚚<b>引越し・配送</b><p>距離、荷物量、日時、地域条件を反映。</p></div>
-      <div class="industry">🎁<b>ノベルティ・印刷</b><p>数量、サイズ、色数、加工、送料を計算。</p></div>
-      <div class="industry">🏢<b>建築・内装</b><p>施工範囲、素材、設備、追加工事を加算。</p></div>
-      <div class="industry">🧹<b>クリーニング</b><p>部屋数、清掃箇所、汚れ、オプション対応。</p></div>
-      <div class="industry">🚗<b>自動車サービス</b><p>車種、サイズ、施工内容、コースを選択。</p></div>
-      <div class="industry">💇<b>美容・サロン</b><p>メニュー、長さ、指名、追加施術を計算。</p></div>
-      <div class="industry">⚙️<b>オーダーメイド</b><p>独自の料金表や条件分岐にも柔軟に対応。</p></div>
-    </div>
-  </div>
-</section>
+<section class="dark"><div class="section"><div class="title"><span>SUPPORTED IDEAS</span><h2>幅広い料金体系に応用できます</h2><p>業種名だけを変えるのではなく、それぞれの料金表に合わせて計算方式を個別設計します。</p></div><div class="industry-grid">
+<div class="industry">🏠<b>住宅・リフォーム</b><p>面積・設備・工事内容を組み合わせた概算。</p></div><div class="industry">🚚<b>引越し・配送</b><p>距離・荷物量・日時・建物条件を反映。</p></div><div class="industry">🎁<b>ノベルティ・印刷</b><p>数量・サイズ・色数・加工・送料を計算。</p></div><div class="industry">⚙️<b>オーダーメイド</b><p>独自の料金表や複雑な条件分岐にも対応。</p></div>
+</div></div></section>
 </main>
 
-<section class="cta">
-  <div class="ctabox">
-    <h2>あなた専用の料金シミュレーターを制作します</h2>
-    <p>「この料金表をWebで自動計算したい」「この条件分岐は作れる？」という段階からご相談いただけます。</p>
-    <div class="hero-actions" style="justify-content:center">
-      <a class="btn btn-secondary" href="https://coconala.com/services/4339390" target="_blank" rel="noopener noreferrer">ココナラで相談する ↗</a>
-      <a class="btn btn-secondary" href="https://quotelab98.github.io/">公式サイトへ戻る</a>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="footer">
-    <div class="brand"><div class="mark">Q</div><div style="color:#fff">QuoteLab<small>SMART WEB TOOLS</small></div></div>
-    <small>© 2026 QuoteLab Demo Gallery.</small>
-  </div>
-</footer>
-</body>
-</html>
+<section class="cta"><div class="ctabox"><h2>あなた専用の料金シミュレーターを制作します</h2><p>「この料金表をWebで自動計算したい」という段階からご相談いただけます。</p><div class="hero-actions" style="justify-content:center"><a class="btn btn-secondary" href="https://coconala.com/services/4339390" target="_blank" rel="noopener noreferrer">ココナラで相談する ↗</a><a class="btn btn-secondary" href="https://quotelab98.github.io/">公式サイトへ戻る</a></div></div></section>
+<footer><div class="footer"><div class="brand"><div class="mark">Q</div><div style="color:#fff">QuoteLab<small>SMART WEB TOOLS</small></div></div><small>© 2026 QuoteLab Demo Showroom.</small></div></footer>
+</body></html>
