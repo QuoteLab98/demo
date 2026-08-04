@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>引越し料金シミュレーター | QuoteLab Demo</title>
+<meta name="description" content="間取り、移動距離、荷物量、建物条件、希望日、各種オプションから引越し料金を概算するデモです。">
+<meta name="theme-color" content="#1769d2">
+<style>
+:root{
+  --blue:#1769d2;--blue2:#4da3ff;--orange:#ff9a2f;--navy:#0d1b2a;
+  --green:#14966b;--text:#1f2937;--muted:#667085;--line:#dce6f2;
+  --bg:#f5f8fc;--white:#fff;--shadow:0 18px 55px rgba(13,27,42,.12)
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;color:var(--text);background:var(--bg);line-height:1.7}
+a{text-decoration:none;color:inherit}
+button,input,select{font:inherit}
+.note-top{background:var(--navy);color:#fff;text-align:center;padding:8px 16px;font-size:12px}
+header{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.header{max-width:1180px;margin:auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center}
+.brand{display:flex;align-items:center;gap:12px;font-weight:900;color:var(--navy)}
+.mark{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;font-size:27px;box-shadow:0 10px 24px rgba(23,105,210,.25)}
+.brand small{display:block;color:var(--blue);font-size:10px;letter-spacing:.12em}
+.headlinks{display:flex;gap:10px}
+.headlinks a{padding:9px 13px;border-radius:11px;border:1px solid var(--line);background:#fff;font-size:12px;font-weight:900}
+.headlinks .primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+.hero{background:radial-gradient(circle at 84% 18%,rgba(77,163,255,.23),transparent 28%),radial-gradient(circle at 10% 85%,rgba(255,154,47,.14),transparent 26%),linear-gradient(135deg,#eef6ff,#fff 50%,#fff8ed);border-bottom:1px solid var(--line)}
+.hero-inner{max-width:1180px;margin:auto;padding:68px 24px 52px;display:grid;grid-template-columns:1.05fr .95fr;gap:42px;align-items:center}
+.eyebrow{color:var(--blue);font-size:12px;font-weight:900;letter-spacing:.13em}
+h1{margin:12px 0 18px;color:var(--navy);font-size:clamp(40px,6vw,66px);line-height:1.06;letter-spacing:-.045em}
+.hero p{color:var(--muted);font-size:17px}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+.tags span{padding:7px 10px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:12px;font-weight:800}
+.visual{background:#fff;border:1px solid var(--line);border-radius:28px;padding:22px;box-shadow:var(--shadow)}
+.road{height:280px;border-radius:20px;background:linear-gradient(180deg,#eaf6ff 0 58%,#d8ead8 58%);position:relative;overflow:hidden}
+.sun{position:absolute;right:28px;top:24px;width:50px;height:50px;border-radius:50%;background:#ffd85b;box-shadow:0 0 0 12px rgba(255,216,91,.18)}
+.street{position:absolute;left:0;right:0;bottom:0;height:95px;background:#7b8794}
+.street:after{content:"";position:absolute;left:0;right:0;top:45px;height:8px;background:repeating-linear-gradient(90deg,#fff 0 34px,transparent 34px 68px)}
+.truck{position:absolute;left:50%;bottom:55px;transform:translateX(-50%);width:250px;height:105px}
+.box{position:absolute;left:0;bottom:0;width:155px;height:90px;background:#fff;border:6px solid var(--blue);border-radius:10px 0 0 8px}
+.cab{position:absolute;right:0;bottom:0;width:95px;height:78px;background:var(--orange);border-radius:12px 18px 8px 8px}
+.cab:before{content:"";position:absolute;left:16px;top:13px;width:45px;height:28px;background:#dff1ff;border-radius:6px}
+.wheel{position:absolute;bottom:-15px;width:34px;height:34px;border-radius:50%;background:#29313a;border:7px solid #aeb7bf}
+.w1{left:36px}.w2{right:28px}
+.main{max-width:1180px;margin:auto;padding:56px 24px 78px}
+.simgrid{display:grid;grid-template-columns:minmax(0,1.22fr) minmax(340px,.78fr);gap:24px;align-items:start}
+.panel{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow)}
+.form{padding:26px}
+.section{padding:22px 0;border-bottom:1px solid var(--line)}
+.section:first-child{padding-top:0}.section:last-child{border-bottom:0}
+.section h2{margin:0 0 6px;color:var(--navy);font-size:19px}
+.sub{margin:0 0 14px;color:var(--muted);font-size:12px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+label{display:block;margin-bottom:6px;font-size:13px;font-weight:900;color:#344054}
+select,input[type=number]{width:100%;height:48px;border:1px solid #cdd9e7;border-radius:12px;padding:0 13px;background:#fff}
+.checks{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.check{display:flex;gap:10px;padding:14px;border:1px solid var(--line);border-radius:14px;cursor:pointer}
+.check:has(input:checked){border-color:var(--blue);background:#eef6ff}
+.check b{display:block;color:var(--navy);font-size:14px}
+.check small{display:block;color:var(--muted);font-size:12px}
+.presets{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.preset{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px;font-size:12px;font-weight:900;cursor:pointer}
+.summary{position:sticky;top:84px;padding:24px}
+.summary h2{margin:0 0 16px;color:var(--navy)}
+.row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px dashed var(--line);font-size:14px}
+.row span:first-child{color:var(--muted)}
+.totalbox{margin-top:18px;padding:20px;border-radius:18px;background:linear-gradient(135deg,#eef6ff,#fff7eb);border:1px solid #dce9f5}
+.price{font-size:39px;font-weight:950;color:var(--navy);line-height:1.15}
+.range{color:var(--blue);font-size:13px;font-weight:900}
+.badges{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.badges span{padding:5px 8px;border-radius:999px;background:#e9fbf2;border:1px solid #b9e8d1;color:#14784f;font-size:11px;font-weight:900}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.actions button{border:0;border-radius:13px;padding:13px;font-weight:900;cursor:pointer}
+.print{background:var(--blue);color:#fff}.reset{background:#eef2f6;color:var(--navy)}
+.notice{margin-top:14px;padding:12px;border-radius:12px;background:#fff8e8;border:1px solid #f3dfae;color:#7a5a10;font-size:11px}
+footer{background:var(--navy);color:#fff}
+.footer{max-width:1180px;margin:auto;padding:30px 24px;display:flex;justify-content:space-between;align-items:center}
+.footer small{color:#aebfd1}
+@media(max-width:960px){.hero-inner,.simgrid{grid-template-columns:1fr}.summary{position:static}}
+@media(max-width:640px){.header{padding:12px 16px}.headlinks a:first-child{display:none}.hero-inner{padding:52px 18px 40px}.main{padding:42px 18px 64px}.grid2,.grid3,.checks,.actions{grid-template-columns:1fr}.form,.summary{padding:18px}.price{font-size:33px}.footer{flex-direction:column;gap:16px;text-align:center}}
+@media print{.note-top,header,.hero,.form,footer,.actions,.notice{display:none!important}.main{padding:0}.simgrid{display:block}.summary{position:static;box-shadow:none;border:none;max-width:720px;margin:auto}}
+</style>
+</head>
+<body>
+<div class="note-top">架空の料金・条件を使用したQuoteLabの操作デモです。実際の引越し料金ではありません。</div>
+
+<header>
+  <div class="header">
+    <a class="brand" href="https://quotelab98.github.io/">
+      <div class="mark">Q</div><div>QuoteLab<small>MOVING DEMO</small></div>
+    </a>
+    <div class="headlinks">
+      <a href="../">デモ一覧へ</a>
+      <a class="primary" href="https://coconala.com/services/4339390" target="_blank" rel="noopener">ココナラで相談</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow">MOVING COST SIMULATOR</div>
+      <h1>引越し料金を<br>その場で概算。</h1>
+      <p>間取り、移動距離、荷物量、建物条件、希望日、オプションを選ぶだけで、引越し費用の目安をリアルタイムに確認できます。</p>
+      <div class="tags"><span>距離連動</span><span>建物条件</span><span>日程加算</span><span>PDF保存</span></div>
+    </div>
+    <div class="visual">
+      <div class="road">
+        <div class="sun"></div>
+        <div class="street"></div>
+        <div class="truck"><div class="box"></div><div class="cab"></div><div class="wheel w1"></div><div class="wheel w2"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="main">
+  <div class="simgrid">
+    <section class="panel form">
+      <div class="section">
+        <h2>1. 基本情報</h2>
+        <p class="sub">間取りと荷物量を選択してください。</p>
+        <div class="grid3">
+          <div><label>間取り</label>
+            <select id="layout">
+              <option value="28000">1R・1K</option>
+              <option value="38000" selected>1LDK</option>
+              <option value="52000">2LDK</option>
+              <option value="68000">3LDK</option>
+              <option value="88000">4LDK以上</option>
+            </select>
+          </div>
+          <div><label>荷物量</label>
+            <select id="volume">
+              <option value="0">少ない</option>
+              <option value="9000" selected>普通</option>
+              <option value="18000">多い</option>
+            </select>
+          </div>
+          <div><label>作業人数</label>
+            <select id="staff">
+              <option value="0">標準</option>
+              <option value="12000">追加1名</option>
+              <option value="24000">追加2名</option>
+            </select>
+          </div>
+        </div>
+        <div class="presets">
+          <button class="preset" data-preset="single">単身引越し</button>
+          <button class="preset" data-preset="family">家族引越し</button>
+          <button class="preset" data-preset="premium">おまかせプラン</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>2. 移動距離</h2>
+        <p class="sub">概算距離を入力するか、距離帯を選択してください。</p>
+        <div class="grid2">
+          <div><label>距離帯</label>
+            <select id="distanceBand">
+              <option value="3000">同一市区町村</option>
+              <option value="8000" selected>同一都道府県</option>
+              <option value="18000">隣接都道府県</option>
+              <option value="32000">中距離</option>
+              <option value="55000">長距離</option>
+              <option value="custom">自由入力</option>
+            </select>
+          </div>
+          <div><label>自由入力（km）</label>
+            <input id="distanceKm" type="number" min="1" max="1500" value="50" disabled>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>3. 建物条件</h2>
+        <p class="sub">現在地と引越し先の搬出入条件を選択してください。</p>
+        <div class="grid2">
+          <div><label>現在地</label>
+            <select id="fromBuilding">
+              <option value="0">1階・エレベーターあり</option>
+              <option value="4000">2〜3階・階段</option>
+              <option value="8000">4階以上・階段</option>
+              <option value="5000">大型家具の搬出困難</option>
+            </select>
+          </div>
+          <div><label>引越し先</label>
+            <select id="toBuilding">
+              <option value="0">1階・エレベーターあり</option>
+              <option value="4000">2〜3階・階段</option>
+              <option value="8000">4階以上・階段</option>
+              <option value="5000">大型家具の搬入困難</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>4. 希望日・時間帯</h2>
+        <div class="grid2">
+          <div><label>希望日</label>
+            <select id="day">
+              <option value="0">平日</option>
+              <option value="8000">土日祝</option>
+              <option value="15000">繁忙期</option>
+            </select>
+          </div>
+          <div><label>時間帯</label>
+            <select id="time">
+              <option value="0">時間指定なし</option>
+              <option value="5000">午前指定</option>
+              <option value="3000">午後指定</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>5. オプション</h2>
+        <p class="sub">必要な作業を複数選択できます。</p>
+        <div class="checks">
+          <label class="check"><input class="flat" type="checkbox" value="6000"><span><b>エアコン取外し</b><small>1台分</small></span></label>
+          <label class="check"><input class="flat" type="checkbox" value="9000"><span><b>エアコン取付</b><small>1台分</small></span></label>
+          <label class="check"><input class="flat" type="checkbox" value="4000"><span><b>洗濯機設置</b><small>接続・動作確認</small></span></label>
+          <label class="check"><input class="flat" type="checkbox" value="18000"><span><b>梱包サービス</b><small>標準的な荷物量を想定</small></span></label>
+          <label class="check"><input class="flat" type="checkbox" value="15000"><span><b>開梱サービス</b><small>荷解き・簡易配置</small></span></label>
+          <label class="check"><input class="flat" type="checkbox" value="12000"><span><b>不用品回収</b><small>小型家具・家電を想定</small></span></label>
+          <label class="check"><input id="early" type="checkbox"><span><b>早期予約割引</b><small>合計から5%割引</small></span></label>
+          <label class="check"><input id="web" type="checkbox" checked><span><b>WEB申込割引</b><small>合計から3%割引</small></span></label>
+        </div>
+      </div>
+    </section>
+
+    <aside class="panel summary">
+      <h2>概算お見積り</h2>
+      <div class="row"><span>基本料金</span><b id="base">0円</b></div>
+      <div class="row"><span>距離加算</span><b id="distance">0円</b></div>
+      <div class="row"><span>荷物・人員</span><b id="volumeStaff">0円</b></div>
+      <div class="row"><span>建物条件</span><b id="building">0円</b></div>
+      <div class="row"><span>日程・時間帯</span><b id="schedule">0円</b></div>
+      <div class="row"><span>オプション</span><b id="options">0円</b></div>
+      <div class="row"><span>各種割引</span><b id="discount" style="color:var(--green)">-0円</b></div>
+
+      <div class="totalbox">
+        <small>概算合計（税込）</small>
+        <div class="price" id="total">0円</div>
+        <div class="range" id="range">目安範囲：0円〜0円</div>
+        <div class="badges" id="badges"></div>
+      </div>
+
+      <div class="actions">
+        <button class="print" onclick="window.print()">印刷・PDF保存</button>
+        <button class="reset" id="reset">入力をリセット</button>
+      </div>
+
+      <div class="notice">このデモは架空の料金設定です。実際の料金は、日時・道路状況・荷物の内容・作業条件などによって変わります。</div>
+    </aside>
+  </div>
+</main>
+
+<footer>
+  <div class="footer">
+    <div class="brand"><div class="mark">Q</div><div style="color:#fff">QuoteLab<small>SMART WEB TOOLS</small></div></div>
+    <small>© 2026 QuoteLab Demo.</small>
+  </div>
+</footer>
+
+<script>
+const yen=n=>Math.round(n).toLocaleString('ja-JP')+'円';
+
+function distanceValue(){
+  const band=document.getElementById('distanceBand').value;
+  if(band!=='custom') return Number(band);
+  const km=Math.max(1,Math.min(1500,Number(document.getElementById('distanceKm').value)||1));
+  return km<=30?5000:5000+(km-30)*180;
+}
+
+function checkedSum(sel){
+  return [...document.querySelectorAll(sel+':checked')].reduce((s,e)=>s+Number(e.value),0);
+}
+
+function calc(){
+  const band=document.getElementById('distanceBand');
+  const km=document.getElementById('distanceKm');
+  km.disabled=band.value!=='custom';
+
+  const base=Number(document.getElementById('layout').value);
+  const distance=distanceValue();
+  const volume=Number(document.getElementById('volume').value);
+  const staff=Number(document.getElementById('staff').value);
+  const building=Number(document.getElementById('fromBuilding').value)+Number(document.getElementById('toBuilding').value);
+  const schedule=Number(document.getElementById('day').value)+Number(document.getElementById('time').value);
+  const options=checkedSum('.flat');
+
+  const subtotal=base+distance+volume+staff+building+schedule+options;
+  const early=document.getElementById('early').checked?subtotal*.05:0;
+  const web=document.getElementById('web').checked?(subtotal-early)*.03:0;
+  const discount=early+web;
+  const total=(subtotal-discount)*1.10;
+
+  document.getElementById('base').textContent=yen(base);
+  document.getElementById('distance').textContent=yen(distance);
+  document.getElementById('volumeStaff').textContent=yen(volume+staff);
+  document.getElementById('building').textContent=yen(building);
+  document.getElementById('schedule').textContent=yen(schedule);
+  document.getElementById('options').textContent=yen(options);
+  document.getElementById('discount').textContent='-'+yen(discount);
+  document.getElementById('total').textContent=yen(total);
+  document.getElementById('range').textContent='目安範囲：'+yen(total*.9)+'〜'+yen(total*1.15);
+
+  const tags=[];
+  tags.push(document.getElementById('layout').selectedOptions[0].text);
+  tags.push(document.getElementById('volume').selectedOptions[0].text+'荷物');
+  if(document.getElementById('day').value!=='0') tags.push(document.getElementById('day').selectedOptions[0].text);
+  if(early>0) tags.push('早期予約割引');
+  if(web>0) tags.push('WEB申込割引');
+  document.getElementById('badges').innerHTML=tags.map(x=>'<span>'+x+'</span>').join('');
+}
+
+function preset(name){
+  document.querySelectorAll('input[type=checkbox]').forEach(e=>e.checked=false);
+  document.getElementById('web').checked=true;
+
+  if(name==='single'){
+    layout.value='28000';volume.value='0';staff.value='0';distanceBand.value='3000';
+    fromBuilding.value='0';toBuilding.value='0';day.value='0';time.value='0';
+  }
+  if(name==='family'){
+    layout.value='68000';volume.value='18000';staff.value='12000';distanceBand.value='18000';
+    fromBuilding.value='4000';toBuilding.value='4000';day.value='8000';time.value='3000';
+  }
+  if(name==='premium'){
+    layout.value='52000';volume.value='9000';staff.value='12000';distanceBand.value='8000';
+    fromBuilding.value='0';toBuilding.value='0';day.value='0';time.value='5000';
+    document.querySelectorAll('.flat').forEach(e=>e.checked=true);
+    early.checked=true;
+  }
+  calc();
+}
+
+document.querySelectorAll('select,input').forEach(e=>{
+  e.addEventListener('input',calc);
+  e.addEventListener('change',calc);
+});
+document.querySelectorAll('.preset').forEach(b=>b.addEventListener('click',()=>preset(b.dataset.preset)));
+document.getElementById('reset').addEventListener('click',()=>{
+  layout.value='38000';volume.value='9000';staff.value='0';distanceBand.value='8000';distanceKm.value='50';
+  fromBuilding.value='0';toBuilding.value='0';day.value='0';time.value='0';
+  document.querySelectorAll('input[type=checkbox]').forEach(e=>e.checked=false);
+  web.checked=true;
+  calc();
+});
+calc();
+</script>
+</body>
+</html>
