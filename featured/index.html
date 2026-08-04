@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高機能料金シミュレーター | QuoteLab Featured Demo</title>
+<meta name="description" content="数量別単価、割引、クーポン、複数オプション、見積書印刷に対応した架空の料金シミュレーターデモです。">
+<style>
+:root{
+  --navy:#12365d;--blue:#1769d2;--blue2:#3b82f6;--light:#eef6ff;
+  --orange:#ff9a2f;--green:#109866;--red:#d94646;--text:#1e293b;
+  --muted:#64748b;--line:#dbe6f2;--white:#fff;--bg:#f6faff;
+  --shadow:0 18px 48px rgba(18,54,93,.12);--radius:22px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--text);line-height:1.65;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+}
+button,input,select{font:inherit}
+.demo-bar{padding:9px 16px;text-align:center;background:#0d2949;color:#fff;font-size:12px}
+header{background:linear-gradient(135deg,#eaf4ff,#fff5e8);border-bottom:1px solid var(--line)}
+.header-inner{max-width:1180px;margin:auto;padding:18px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:12px;color:var(--navy);font-weight:900}
+.mark{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--blue),var(--orange));box-shadow:0 9px 20px rgba(23,105,210,.25)}
+.brand small{display:block;font-size:10px;letter-spacing:.08em;color:var(--muted)}
+.pill{padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--navy);font-weight:800;font-size:12px}
+.hero{max-width:1180px;margin:auto;padding:62px 24px 48px;display:grid;grid-template-columns:1.08fr .92fr;gap:42px;align-items:center}
+.eyebrow{color:var(--blue);font-size:13px;font-weight:900;letter-spacing:.08em}
+h1{margin:12px 0 16px;color:var(--navy);font-size:clamp(38px,6vw,64px);line-height:1.08;letter-spacing:-.04em}
+.hero p{margin:0 0 24px;color:var(--muted);font-size:17px}
+.hero-tags{display:flex;gap:8px;flex-wrap:wrap}
+.hero-tags span{padding:7px 10px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:12px;font-weight:800;color:var(--navy)}
+.hero-card{background:#fff;border:1px solid #edf3f8;border-radius:28px;padding:24px;box-shadow:var(--shadow)}
+.hero-card h3{margin:0 0 14px;color:var(--navy)}
+.demo-line{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:14px}
+.demo-line.discount b{color:var(--green)}
+.demo-total{margin-top:16px;padding:18px;border-radius:18px;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff}
+.demo-total strong{display:block;font-size:32px;line-height:1.15}
+.features{max-width:1180px;margin:auto;padding:0 24px 50px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.feature{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 8px 28px rgba(18,54,93,.05)}
+.feature b{display:block;color:var(--navy);margin-top:5px}.feature span{font-size:12px;color:var(--muted)}
+.section{max-width:1180px;margin:auto;padding:68px 24px}
+.section-title{text-align:center;margin-bottom:30px}.section-title h2{margin:0;color:var(--navy);font-size:clamp(28px,4vw,42px);letter-spacing:-.03em}.section-title p{margin:7px 0 0;color:var(--muted)}
+.sim-grid{display:grid;grid-template-columns:minmax(0,1.22fr) minmax(340px,.78fr);gap:24px;align-items:start}
+.panel{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.form-panel{padding:26px}.form-section{padding:22px 0;border-bottom:1px solid var(--line)}.form-section:first-child{padding-top:0}.form-section:last-child{border-bottom:0;padding-bottom:0}
+.form-section h3{margin:0 0 6px;color:var(--navy);font-size:18px}.note{margin:0 0 14px;color:var(--muted);font-size:12px}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+label{display:block;margin-bottom:6px;font-size:13px;font-weight:800;color:#334155}
+select,input[type="number"],input[type="text"]{width:100%;height:48px;padding:0 13px;border:1px solid #ccd9e7;border-radius:12px;background:#fff;color:var(--text);outline:none}
+select:focus,input:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(23,105,210,.1)}
+.check-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.check{display:flex;gap:10px;align-items:flex-start;padding:13px;border:1px solid var(--line);border-radius:14px;cursor:pointer;background:#fff;transition:.2s}
+.check:has(input:checked){border-color:var(--blue);background:var(--light)}.check input{margin-top:4px}.check b{display:block;color:var(--navy);font-size:14px}.check small{display:block;color:var(--muted);font-size:12px}
+.product-preview{display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:center;padding:16px;border-radius:18px;background:linear-gradient(135deg,#eff6ff,#fff7ec);border:1px solid #dce9f7;margin-bottom:16px}
+.product-art{height:120px;border-radius:20px;background:#fff;border:1px solid var(--line);display:grid;place-items:center;font-size:60px;box-shadow:0 8px 20px rgba(18,54,93,.07)}
+.product-preview h4{margin:0;color:var(--navy);font-size:20px}.product-preview p{margin:5px 0 0;color:var(--muted);font-size:13px}
+.price-table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}.price-table th,.price-table td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left}.price-table th{color:var(--navy);background:#f7fbff}
+.active-tier{background:#e9f8f1!important;color:#0c754d;font-weight:900}
+.discount-box{padding:16px;border:1px solid #bee8d5;border-radius:16px;background:linear-gradient(135deg,#effcf7,#fbfffd)}
+.coupon-row{display:grid;grid-template-columns:1fr auto;gap:10px}.coupon-btn{border:0;border-radius:12px;padding:0 18px;background:var(--navy);color:#fff;font-weight:900;cursor:pointer}.coupon-status{margin-top:8px;font-size:12px;font-weight:800}.coupon-status.ok{color:var(--green)}.coupon-status.ng{color:var(--red)}
+.summary{position:sticky;top:18px;padding:24px}.summary h3{margin:0 0 16px;color:var(--navy)}
+.summary-row{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:14px}.summary-row span:first-child{color:var(--muted)}.discount{color:var(--green);font-weight:900}
+.total-box{margin-top:18px;padding:20px;border:1px solid #dbeaf7;border-radius:18px;background:linear-gradient(135deg,#eef6ff,#fff7eb)}
+.total-box small{color:var(--muted);font-weight:800}.total-price{font-size:38px;font-weight:950;color:var(--navy);line-height:1.15;letter-spacing:-.04em}.unit-price{font-size:13px;color:var(--muted)}
+.badges{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.badge{padding:5px 8px;border-radius:999px;background:#e9fbf2;border:1px solid #b9e8d1;color:#14784f;font-size:11px;font-weight:900}
+.chart{margin-top:18px}.chart-row{margin-bottom:12px}.chart-label{display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px}.bar{height:10px;border-radius:999px;background:#e8eef5;overflow:hidden}.bar>span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--orange));width:0;transition:.3s}
+.minimum{margin-top:14px;padding:11px 12px;border-radius:12px;background:#fff4e5;color:#8a5a00;font-size:12px}.minimum.ok{background:#eaf9f1;color:#13784f}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.action-btn{border:0;border-radius:13px;padding:13px 10px;font-weight:900;cursor:pointer}.print-btn{background:var(--blue);color:#fff}.reset-btn{background:#edf2f7;color:var(--navy)}
+.notice{margin-top:14px;padding:12px;border-radius:12px;background:#f8fafc;color:var(--muted);font-size:11px;border:1px solid var(--line)}
+.examples{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.example{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px}.example h3{margin:7px 0 5px;color:var(--navy)}.example p{margin:0;color:var(--muted);font-size:14px}
+footer{margin-top:40px;background:#0d2949;color:#fff}.footer-inner{max-width:1180px;margin:auto;padding:34px 24px;text-align:center}.footer-inner small{color:#b8c8da}
+@media(max-width:920px){.hero,.sim-grid{grid-template-columns:1fr}.features{grid-template-columns:repeat(2,1fr)}.summary{position:static}.examples{grid-template-columns:1fr}}
+@media(max-width:640px){.header-inner{padding:14px 16px}.pill{display:none}.hero{padding:48px 18px 34px}.features,.section{padding-left:18px;padding-right:18px}.grid-2,.grid-3,.check-grid{grid-template-columns:1fr}.product-preview{grid-template-columns:1fr}.product-art{height:100px}.form-panel,.summary{padding:18px}.actions{grid-template-columns:1fr}.total-price{font-size:32px}}
+@media print{
+  body{background:#fff}.demo-bar,header,.hero,.features,.form-panel,.section-title,.examples,footer,.actions,.notice{display:none!important}
+  .section{padding:0}.sim-grid{display:block}.summary{position:static;box-shadow:none;border:none;max-width:720px;margin:auto}.panel{box-shadow:none}
+}
+</style>
+</head>
+<body>
+
+<div style="background:#0d2949;color:#fff;padding:10px 18px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Yu Gothic',Meiryo,sans-serif;">
+  <div style="max-width:1180px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;">
+    <strong>QuoteLab Featured Demo</strong>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <a href="../" style="color:#0d2949;background:#fff;text-decoration:none;padding:7px 11px;border-radius:9px;font-size:12px;font-weight:800;">← デモ一覧</a>
+      <a href="https://quotelab98.github.io/" style="color:#fff;border:1px solid rgba(255,255,255,.35);text-decoration:none;padding:7px 11px;border-radius:9px;font-size:12px;font-weight:800;">公式サイト</a>
+      <a href="https://coconala.com/services/4339390" target="_blank" rel="noopener noreferrer" style="color:#fff;background:#ff9a2f;text-decoration:none;padding:7px 11px;border-radius:9px;font-size:12px;font-weight:800;">ココナラで相談</a>
+    </div>
+  </div>
+</div>
+
+<div class="demo-bar">架空の料金シミュレーターデモです。実在する企業・商品・料金とは関係ありません。</div>
+
+<header>
+  <div class="header-inner">
+    <div class="brand"><div class="mark">N</div><div>QuoteLab<small>FEATURED DEMO</small></div></div>
+    <div class="pill">高機能サンプルサイト</div>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div>
+    <div class="eyebrow">● ADVANCED PRICE SIMULATOR</div>
+    <h1>複雑な料金条件も、<br>見やすく自動計算。</h1>
+    <p>サイズ別単価、ロット別単価、色数加算、固定料金、数量連動オプション、割合加算、複数割引、クーポンまでを一つの画面で確認できます。</p>
+    <div class="hero-tags"><span>ロット別単価</span><span>複数割引</span><span>クーポン</span><span>見積書印刷</span><span>スマホ対応</span></div>
+  </div>
+  <div class="hero-card">
+    <h3>見積りイメージ</h3>
+    <div class="demo-line"><span>アクリルスタンド × 300個</span><b>201,000円</b></div>
+    <div class="demo-line"><span>加工・オプション</span><b>48,000円</b></div>
+    <div class="demo-line discount"><span>数量割引 8%</span><b>-19,920円</b></div>
+    <div class="demo-line discount"><span>クーポン 5%</span><b>-11,454円</b></div>
+    <div class="demo-total"><span>概算合計</span><strong>239,388円</strong><small>税込</small></div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="feature">📊<b>価格テーブル連動</b><span>数量に応じて単価を自動切替</span></div>
+  <div class="feature">🎨<b>色数・仕様加算</b><span>組み合わせ条件を細かく反映</span></div>
+  <div class="feature">🏷️<b>複数割引を併用</b><span>数量・会員・キャンペーン・クーポン</span></div>
+  <div class="feature">🧾<b>見積書として印刷</b><span>ブラウザからPDF保存にも対応</span></div>
+</section>
+
+<section class="section" id="simulator">
+  <div class="section-title">
+    <h2>高機能料金シミュレーター</h2>
+    <p>選択内容に応じて商品イメージ、単価、割引、合計金額がリアルタイムで変わります。</p>
+  </div>
+
+  <div class="sim-grid">
+    <div class="panel form-panel">
+      <div class="form-section">
+        <h3>1. 商品・サイズ・数量</h3>
+        <p class="note">商品を変更すると、イメージと基本料金が切り替わります。</p>
+
+        <div class="product-preview">
+          <div class="product-art" id="productArt">🔑</div>
+          <div>
+            <h4 id="productName">アクリルキーホルダー</h4>
+            <p id="productDescription">定番のオリジナルグッズ。サイズ、形状、印刷仕様を自由に組み合わせる想定です。</p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div>
+            <label for="product">商品タイプ</label>
+            <select id="product">
+              <option value="keyholder">アクリルキーホルダー</option>
+              <option value="stand">アクリルスタンド</option>
+              <option value="badge">缶バッジ</option>
+              <option value="rubber">PVCラバーストラップ</option>
+              <option value="coaster">オリジナルコースター</option>
+            </select>
+          </div>
+          <div>
+            <label for="size">商品サイズ</label>
+            <select id="size">
+              <option value="small">50mm以内</option>
+              <option value="medium">70mm以内</option>
+              <option value="large">90mm以内</option>
+              <option value="xlarge">100mm超</option>
+            </select>
+          </div>
+          <div>
+            <label for="quantity">注文数量</label>
+            <input id="quantity" type="number" min="10" max="3000" value="100">
+          </div>
+        </div>
+
+        <table class="price-table">
+          <thead><tr><th>ロット</th><th>基本単価</th><th>適用状況</th></tr></thead>
+          <tbody>
+            <tr id="tier10"><td>10〜49個</td><td id="price10">780円</td><td></td></tr>
+            <tr id="tier50"><td>50〜99個</td><td id="price50">690円</td><td></td></tr>
+            <tr id="tier100"><td>100〜299個</td><td id="price100">620円</td><td></td></tr>
+            <tr id="tier300"><td>300〜499個</td><td id="price300">570円</td><td></td></tr>
+            <tr id="tier500"><td>500〜999個</td><td id="price500">520円</td><td></td></tr>
+            <tr id="tier1000"><td>1,000個以上</td><td id="price1000">470円</td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="form-section">
+        <h3>2. 本体仕様</h3>
+        <div class="grid-3">
+          <div><label for="material">素材・厚み</label>
+            <select id="material"><option value="0">標準素材</option><option value="60">厚手素材</option><option value="110">高透明素材</option><option value="170">特殊カラー素材</option></select>
+          </div>
+          <div><label for="shape">形状</label>
+            <select id="shape"><option value="0">定型</option><option value="80">自由形状</option><option value="150">複雑形状</option></select>
+          </div>
+          <div><label for="layers">構造</label>
+            <select id="layers"><option value="0">1層</option><option value="90">2層</option><option value="180">3層</option><option value="320">立体・3D</option></select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>3. 印刷・色数・加工</h3>
+        <p class="note">色数と加工方法に応じて、1個あたりの料金が加算されます。</p>
+        <div class="grid-3">
+          <div><label for="printSide">印刷面</label>
+            <select id="printSide"><option value="90">片面</option><option value="170">両面</option><option value="260">両面＋別デザイン</option></select>
+          </div>
+          <div><label for="colors">カラー数</label>
+            <select id="colors"><option value="0">1色</option><option value="35">2色</option><option value="70">3色</option><option value="105">4色</option><option value="160">フルカラー</option></select>
+          </div>
+          <div><label for="surface">表面加工</label>
+            <select id="surface"><option value="0">加工なし</option><option value="60">マット</option><option value="85">グロス</option><option value="145">ホログラム</option><option value="220">特殊箔</option></select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>4. オプション</h3>
+        <p class="note">「一律加算」「数量×単価」「小計に対する割合加算」の3種類を混在できます。</p>
+        <div class="check-grid">
+          <label class="check"><input class="flat" type="checkbox" value="3000"><span><b>入稿データチェック</b><small>一律 +3,000円</small></span></label>
+          <label class="check"><input class="flat" type="checkbox" value="8000"><span><b>データ修正サポート</b><small>一律 +8,000円</small></span></label>
+          <label class="check"><input class="flat" type="checkbox" value="15000"><span><b>デザイン新規制作</b><small>一律 +15,000円</small></span></label>
+          <label class="check"><input class="flat" type="checkbox" value="5000"><span><b>試作サンプル</b><small>一律 +5,000円</small></span></label>
+          <label class="check"><input class="peritem" type="checkbox" value="35"><span><b>個別OPP包装</b><small>数量 × 35円</small></span></label>
+          <label class="check"><input class="peritem" type="checkbox" value="55"><span><b>台紙封入</b><small>数量 × 55円</small></span></label>
+          <label class="check"><input class="peritem" type="checkbox" value="90"><span><b>個別名入れ</b><small>数量 × 90円</small></span></label>
+          <label class="check"><input class="rate" type="checkbox" value="0.08"><span><b>特急制作</b><small>対象小計の 8%</small></span></label>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>5. 割引設定</h3>
+        <div class="discount-box">
+          <div class="check-grid">
+            <label class="check"><input id="member" type="checkbox"><span><b>会員割引 2%</b><small>数量割引後の金額から割引</small></span></label>
+            <label class="check"><input id="campaign" type="checkbox"><span><b>WEB限定割引 3%</b><small>期間限定キャンペーン想定</small></span></label>
+          </div>
+          <div style="margin-top:15px">
+            <label for="coupon">クーポンコード</label>
+            <div class="coupon-row">
+              <input id="coupon" type="text" placeholder="例：DEMO5">
+              <button id="couponBtn" class="coupon-btn" type="button">適用</button>
+            </div>
+            <div id="couponStatus" class="coupon-status">デモコード：DEMO5（5%OFF）／WEB10（10%OFF・上限10,000円）</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="panel summary">
+      <h3>概算お見積り</h3>
+      <div class="summary-row"><span>商品本体</span><b id="bodySubtotal">0円</b></div>
+      <div class="summary-row"><span>印刷・加工</span><b id="processingSubtotal">0円</b></div>
+      <div class="summary-row"><span>固定オプション</span><b id="flatSubtotal">0円</b></div>
+      <div class="summary-row"><span>数量連動オプション</span><b id="perItemSubtotal">0円</b></div>
+      <div class="summary-row"><span>割合加算</span><b id="rateSubtotal">0円</b></div>
+      <div class="summary-row"><span>数量割引</span><b class="discount" id="quantityDiscount">-0円</b></div>
+      <div class="summary-row"><span>会員割引</span><b class="discount" id="memberDiscount">-0円</b></div>
+      <div class="summary-row"><span>キャンペーン割引</span><b class="discount" id="campaignDiscount">-0円</b></div>
+      <div class="summary-row"><span>クーポン割引</span><b class="discount" id="couponDiscount">-0円</b></div>
+
+      <div class="total-box">
+        <small>概算合計（税込）</small>
+        <div class="total-price" id="totalPrice">0円</div>
+        <div class="unit-price" id="unitPrice">1個あたり 0円</div>
+        <div class="badges" id="badges"></div>
+      </div>
+
+      <div class="chart">
+        <div class="chart-row">
+          <div class="chart-label"><span>通常価格</span><b id="normalLabel">0円</b></div>
+          <div class="bar"><span id="normalBar"></span></div>
+        </div>
+        <div class="chart-row">
+          <div class="chart-label"><span>割引合計</span><b id="discountLabel">0円</b></div>
+          <div class="bar"><span id="discountBar"></span></div>
+        </div>
+        <div class="chart-row">
+          <div class="chart-label"><span>割引後価格</span><b id="finalLabel">0円</b></div>
+          <div class="bar"><span id="finalBar"></span></div>
+        </div>
+      </div>
+
+      <div id="minimum" class="minimum">最低注文金額は税込30,000円です。</div>
+
+      <div class="actions">
+        <button type="button" class="action-btn print-btn" onclick="window.print()">見積書を印刷・PDF保存</button>
+        <button type="button" class="action-btn reset-btn" id="resetBtn">入力内容をリセット</button>
+      </div>
+
+      <div class="notice">
+        デモ用の架空料金です。実際の制作では、料金表、端数処理、最低金額、割引上限、組み合わせ不可条件なども個別に設定できます。
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-title"><h2>このデモで確認できる機能</h2><p>見た目だけではなく、実務で使われる料金ロジックを複数組み込んでいます。</p></div>
+  <div class="examples">
+    <div class="example">📈<h3>ロット別単価</h3><p>数量帯ごとに単価を切り替え、現在適用中の価格帯を表で表示します。</p></div>
+    <div class="example">🧮<h3>異なる加算方式</h3><p>固定料金、数量×単価、割合加算を同じ見積りの中で計算します。</p></div>
+    <div class="example">🏷️<h3>段階的な割引</h3><p>数量、会員、キャンペーン、クーポンを順番に適用し、割引額を個別表示します。</p></div>
+  </div>
+</section>
+</main>
+
+<footer><div class="footer-inner"><b>QuoteLab</b><br><small>QuoteLabの代表デモです。掲載価格・商品・条件はすべて架空です。</small></div></footer>
+
+<script>
+const yen = n => Math.round(n).toLocaleString('ja-JP') + '円';
+
+const products = {
+  keyholder:{name:'アクリルキーホルダー',art:'🔑',desc:'定番のオリジナルグッズ。サイズ、形状、印刷仕様を自由に組み合わせる想定です。',prices:[780,690,620,570,520,470]},
+  stand:{name:'アクリルスタンド',art:'🧍',desc:'台座付きのディスプレイ商品。大きさや構造による価格差を表現できます。',prices:[980,880,790,720,660,590]},
+  badge:{name:'缶バッジ',art:'🔘',desc:'小ロットから大量生産まで、数量帯による単価変化が大きい商品例です。',prices:[420,350,310,280,250,220]},
+  rubber:{name:'PVCラバーストラップ',art:'🧩',desc:'色数や階層、立体表現など複雑な加工条件を想定した商品例です。',prices:[1180,1040,930,850,780,710]},
+  coaster:{name:'オリジナルコースター',art:'☕',desc:'素材、サイズ、表面加工による価格差を見せやすい商品例です。',prices:[680,610,550,510,470,430]}
+};
+const sizeAdd={small:0,medium:70,large:140,xlarge:240};
+let activeCoupon={rate:0,cap:Infinity,label:''};
+
+function tierInfo(q){
+  if(q>=1000) return {index:5,id:'tier1000',rate:.15,label:'数量割引 15%'};
+  if(q>=500) return {index:4,id:'tier500',rate:.10,label:'数量割引 10%'};
+  if(q>=300) return {index:3,id:'tier300',rate:.08,label:'数量割引 8%'};
+  if(q>=100) return {index:2,id:'tier100',rate:.05,label:'数量割引 5%'};
+  if(q>=50) return {index:1,id:'tier50',rate:.03,label:'数量割引 3%'};
+  return {index:0,id:'tier10',rate:0,label:''};
+}
+function val(id){return Number(document.getElementById(id).value)}
+function checkedSum(selector){return [...document.querySelectorAll(selector+':checked')].reduce((s,e)=>s+Number(e.value),0)}
+
+function updateProduct(){
+  const p=products[document.getElementById('product').value];
+  document.getElementById('productArt').textContent=p.art;
+  document.getElementById('productName').textContent=p.name;
+  document.getElementById('productDescription').textContent=p.desc;
+  ['price10','price50','price100','price300','price500','price1000'].forEach((id,i)=>document.getElementById(id).textContent=yen(p.prices[i]));
+}
+
+function calculate(){
+  updateProduct();
+  const qty=Math.max(10,Math.min(3000,Number(document.getElementById('quantity').value)||10));
+  document.getElementById('quantity').value=qty;
+
+  const p=products[document.getElementById('product').value];
+  const tier=tierInfo(qty);
+  document.querySelectorAll('.price-table tbody tr').forEach(tr=>{tr.classList.remove('active-tier');tr.cells[2].textContent=''});
+  const activeRow=document.getElementById(tier.id); activeRow.classList.add('active-tier'); activeRow.cells[2].textContent='適用中';
+
+  const unitBase=p.prices[tier.index]+sizeAdd[document.getElementById('size').value]+val('material')+val('shape')+val('layers');
+  const body=unitBase*qty;
+  const processing=(val('printSide')+val('colors')+val('surface'))*qty;
+  const flat=checkedSum('.flat');
+  const perItem=checkedSum('.peritem')*qty;
+  const baseBeforeRate=body+processing+flat+perItem;
+  const rateAdd=baseBeforeRate*checkedSum('.rate');
+  const normal=baseBeforeRate+rateAdd;
+
+  const quantityDisc=normal*tier.rate;
+  let after=normal-quantityDisc;
+  const memberRate=document.getElementById('member').checked?.02:0;
+  const memberDisc=after*memberRate; after-=memberDisc;
+  const campaignRate=document.getElementById('campaign').checked?.03:0;
+  const campaignDisc=after*campaignRate; after-=campaignDisc;
+  const couponDisc=Math.min(after*activeCoupon.rate,activeCoupon.cap); after-=couponDisc;
+
+  const taxIncluded=after*1.10;
+  const minimum=30000;
+  const finalTotal=Math.max(taxIncluded,minimum);
+  const minimumApplied=taxIncluded<minimum;
+  const discountTotal=quantityDisc+memberDisc+campaignDisc+couponDisc;
+
+  document.getElementById('bodySubtotal').textContent=yen(body);
+  document.getElementById('processingSubtotal').textContent=yen(processing);
+  document.getElementById('flatSubtotal').textContent=yen(flat);
+  document.getElementById('perItemSubtotal').textContent=yen(perItem);
+  document.getElementById('rateSubtotal').textContent=yen(rateAdd);
+  document.getElementById('quantityDiscount').textContent='-'+yen(quantityDisc);
+  document.getElementById('memberDiscount').textContent='-'+yen(memberDisc);
+  document.getElementById('campaignDiscount').textContent='-'+yen(campaignDisc);
+  document.getElementById('couponDiscount').textContent='-'+yen(couponDisc);
+  document.getElementById('totalPrice').textContent=yen(finalTotal);
+  document.getElementById('unitPrice').textContent='1個あたり '+yen(finalTotal/qty);
+
+  const badges=[];
+  if(tier.rate) badges.push(tier.label+' 適用中');
+  if(memberRate) badges.push('会員割引 2% 適用中');
+  if(campaignRate) badges.push('WEB限定 3% 適用中');
+  if(activeCoupon.rate) badges.push(activeCoupon.label+' 適用中');
+  if(minimumApplied) badges.push('最低注文金額を適用');
+  document.getElementById('badges').innerHTML=badges.length?badges.map(x=>'<span class="badge">'+x+'</span>').join(''):'<span class="badge">割引未適用</span>';
+
+  const minimumBox=document.getElementById('minimum');
+  minimumBox.className='minimum'+(minimumApplied?'':' ok');
+  minimumBox.textContent=minimumApplied?'最低注文金額（税込30,000円）が適用されています。':'最低注文金額をクリアしています。';
+
+  const max=Math.max(normal*1.10,finalTotal,1);
+  document.getElementById('normalLabel').textContent=yen(normal*1.10);
+  document.getElementById('discountLabel').textContent='-'+yen(discountTotal*1.10);
+  document.getElementById('finalLabel').textContent=yen(finalTotal);
+  document.getElementById('normalBar').style.width=(normal*1.10/max*100)+'%';
+  document.getElementById('discountBar').style.width=Math.min(100,discountTotal*1.10/max*100)+'%';
+  document.getElementById('finalBar').style.width=(finalTotal/max*100)+'%';
+}
+
+document.getElementById('couponBtn').addEventListener('click',()=>{
+  const code=document.getElementById('coupon').value.trim().toUpperCase();
+  const status=document.getElementById('couponStatus');
+  if(code==='DEMO5'){activeCoupon={rate:.05,cap:Infinity,label:'DEMO5 5%OFF'};status.className='coupon-status ok';status.textContent='クーポン DEMO5 を適用しました。';}
+  else if(code==='WEB10'){activeCoupon={rate:.10,cap:10000,label:'WEB10 10%OFF'};status.className='coupon-status ok';status.textContent='クーポン WEB10 を適用しました（割引上限10,000円）。';}
+  else if(code===''){activeCoupon={rate:0,cap:Infinity,label:''};status.className='coupon-status';status.textContent='クーポンを解除しました。';}
+  else{activeCoupon={rate:0,cap:Infinity,label:''};status.className='coupon-status ng';status.textContent='使用できないクーポンコードです。';}
+  calculate();
+});
+
+document.getElementById('resetBtn').addEventListener('click',()=>{
+  document.querySelectorAll('select').forEach(s=>s.selectedIndex=0);
+  document.querySelectorAll('input[type="checkbox"]').forEach(c=>c.checked=false);
+  document.getElementById('quantity').value=100;
+  document.getElementById('coupon').value='';
+  activeCoupon={rate:0,cap:Infinity,label:''};
+  document.getElementById('couponStatus').className='coupon-status';
+  document.getElementById('couponStatus').textContent='デモコード：DEMO5（5%OFF）／WEB10（10%OFF・上限10,000円）';
+  calculate();
+});
+
+document.querySelectorAll('select,input').forEach(el=>{
+  el.addEventListener('input',calculate);
+  el.addEventListener('change',calculate);
+});
+calculate();
+</script>
+</body>
+</html>
