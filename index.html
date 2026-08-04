@@ -1,595 +1,281 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>料金シミュレーター制作 | QuoteLab98</title>
-<meta name="description" content="数量別単価、割引、クーポン、複数オプション、見積書印刷に対応した架空の料金シミュレーターデモです。">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QuoteLab Demo Gallery | 操作デモ一覧</title>
+<meta name="description" content="QuoteLabが制作した料金シミュレーター・見積フォームの操作デモ一覧です。リフォーム、引越しなど業種別のデモをブラウザ上で体験できます。">
+<meta name="theme-color" content="#1769d2">
 <style>
 :root{
-  --navy:#12365d;--blue:#1769d2;--blue2:#3b82f6;--light:#eef6ff;
-  --orange:#ff9a2f;--green:#109866;--red:#d94646;--text:#1e293b;
-  --muted:#64748b;--line:#dbe6f2;--white:#fff;--bg:#f6faff;
-  --shadow:0 18px 48px rgba(18,54,93,.12);--radius:22px;
+  --blue:#1769d2;--blue2:#4da3ff;--orange:#ff9a2f;--navy:#0d1b2a;
+  --text:#1f2937;--muted:#667085;--line:#dce6f2;--bg:#f5f8fc;
+  --white:#fff;--shadow:0 20px 60px rgba(13,27,42,.12)
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
-  margin:0;background:var(--bg);color:var(--text);line-height:1.65;
+  margin:0;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+  color:var(--text);background:var(--bg);line-height:1.7;
 }
-button,input,select{font:inherit}
-.demo-bar{padding:9px 16px;text-align:center;background:#0d2949;color:#fff;font-size:12px}
-header{background:linear-gradient(135deg,#eaf4ff,#fff5e8);border-bottom:1px solid var(--line)}
-.header-inner{max-width:1180px;margin:auto;padding:18px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
-.brand{display:flex;align-items:center;gap:12px;color:var(--navy);font-weight:900}
-.mark{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--blue),var(--orange));box-shadow:0 9px 20px rgba(23,105,210,.25)}
-.brand small{display:block;font-size:10px;letter-spacing:.08em;color:var(--muted)}
-.pill{padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--navy);font-weight:800;font-size:12px}
-.hero{max-width:1180px;margin:auto;padding:62px 24px 48px;display:grid;grid-template-columns:1.08fr .92fr;gap:42px;align-items:center}
-.eyebrow{color:var(--blue);font-size:13px;font-weight:900;letter-spacing:.08em}
-h1{margin:12px 0 16px;color:var(--navy);font-size:clamp(38px,6vw,64px);line-height:1.08;letter-spacing:-.04em}
-.hero p{margin:0 0 24px;color:var(--muted);font-size:17px}
-.hero-tags{display:flex;gap:8px;flex-wrap:wrap}
-.hero-tags span{padding:7px 10px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:12px;font-weight:800;color:var(--navy)}
-.hero-card{background:#fff;border:1px solid #edf3f8;border-radius:28px;padding:24px;box-shadow:var(--shadow)}
-.hero-card h3{margin:0 0 14px;color:var(--navy)}
-.demo-line{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:14px}
-.demo-line.discount b{color:var(--green)}
-.demo-total{margin-top:16px;padding:18px;border-radius:18px;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff}
-.demo-total strong{display:block;font-size:32px;line-height:1.15}
-.features{max-width:1180px;margin:auto;padding:0 24px 50px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.feature{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 8px 28px rgba(18,54,93,.05)}
-.feature b{display:block;color:var(--navy);margin-top:5px}.feature span{font-size:12px;color:var(--muted)}
-.section{max-width:1180px;margin:auto;padding:68px 24px}
-.section-title{text-align:center;margin-bottom:30px}.section-title h2{margin:0;color:var(--navy);font-size:clamp(28px,4vw,42px);letter-spacing:-.03em}.section-title p{margin:7px 0 0;color:var(--muted)}
-.sim-grid{display:grid;grid-template-columns:minmax(0,1.22fr) minmax(340px,.78fr);gap:24px;align-items:start}
-.panel{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
-.form-panel{padding:26px}.form-section{padding:22px 0;border-bottom:1px solid var(--line)}.form-section:first-child{padding-top:0}.form-section:last-child{border-bottom:0;padding-bottom:0}
-.form-section h3{margin:0 0 6px;color:var(--navy);font-size:18px}.note{margin:0 0 14px;color:var(--muted);font-size:12px}
-.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-label{display:block;margin-bottom:6px;font-size:13px;font-weight:800;color:#334155}
-select,input[type="number"],input[type="text"]{width:100%;height:48px;padding:0 13px;border:1px solid #ccd9e7;border-radius:12px;background:#fff;color:var(--text);outline:none}
-select:focus,input:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(23,105,210,.1)}
-.check-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.check{display:flex;gap:10px;align-items:flex-start;padding:13px;border:1px solid var(--line);border-radius:14px;cursor:pointer;background:#fff;transition:.2s}
-.check:has(input:checked){border-color:var(--blue);background:var(--light)}.check input{margin-top:4px}.check b{display:block;color:var(--navy);font-size:14px}.check small{display:block;color:var(--muted);font-size:12px}
-.product-preview{display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:center;padding:16px;border-radius:18px;background:linear-gradient(135deg,#eff6ff,#fff7ec);border:1px solid #dce9f7;margin-bottom:16px}
-.product-art{height:120px;border-radius:20px;background:#fff;border:1px solid var(--line);display:grid;place-items:center;font-size:60px;box-shadow:0 8px 20px rgba(18,54,93,.07)}
-.product-preview h4{margin:0;color:var(--navy);font-size:20px}.product-preview p{margin:5px 0 0;color:var(--muted);font-size:13px}
-.price-table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}.price-table th,.price-table td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left}.price-table th{color:var(--navy);background:#f7fbff}
-.active-tier{background:#e9f8f1!important;color:#0c754d;font-weight:900}
-.discount-box{padding:16px;border:1px solid #bee8d5;border-radius:16px;background:linear-gradient(135deg,#effcf7,#fbfffd)}
-.coupon-row{display:grid;grid-template-columns:1fr auto;gap:10px}.coupon-btn{border:0;border-radius:12px;padding:0 18px;background:var(--navy);color:#fff;font-weight:900;cursor:pointer}.coupon-status{margin-top:8px;font-size:12px;font-weight:800}.coupon-status.ok{color:var(--green)}.coupon-status.ng{color:var(--red)}
-.summary{position:sticky;top:18px;padding:24px}.summary h3{margin:0 0 16px;color:var(--navy)}
-.summary-row{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:14px}.summary-row span:first-child{color:var(--muted)}.discount{color:var(--green);font-weight:900}
-.total-box{margin-top:18px;padding:20px;border:1px solid #dbeaf7;border-radius:18px;background:linear-gradient(135deg,#eef6ff,#fff7eb)}
-.total-box small{color:var(--muted);font-weight:800}.total-price{font-size:38px;font-weight:950;color:var(--navy);line-height:1.15;letter-spacing:-.04em}.unit-price{font-size:13px;color:var(--muted)}
-.badges{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.badge{padding:5px 8px;border-radius:999px;background:#e9fbf2;border:1px solid #b9e8d1;color:#14784f;font-size:11px;font-weight:900}
-.chart{margin-top:18px}.chart-row{margin-bottom:12px}.chart-label{display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px}.bar{height:10px;border-radius:999px;background:#e8eef5;overflow:hidden}.bar>span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--orange));width:0;transition:.3s}
-.minimum{margin-top:14px;padding:11px 12px;border-radius:12px;background:#fff4e5;color:#8a5a00;font-size:12px}.minimum.ok{background:#eaf9f1;color:#13784f}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.action-btn{border:0;border-radius:13px;padding:13px 10px;font-weight:900;cursor:pointer}.print-btn{background:var(--blue);color:#fff}.reset-btn{background:#edf2f7;color:var(--navy)}
-.notice{margin-top:14px;padding:12px;border-radius:12px;background:#f8fafc;color:var(--muted);font-size:11px;border:1px solid var(--line)}
-.examples{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.example{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px}.example h3{margin:7px 0 5px;color:var(--navy)}.example p{margin:0;color:var(--muted);font-size:14px}
-footer{margin-top:40px;background:#0d2949;color:#fff}.footer-inner{max-width:1180px;margin:auto;padding:34px 24px;text-align:center}.footer-inner small{color:#b8c8da}
-@media(max-width:920px){.hero,.sim-grid{grid-template-columns:1fr}.features{grid-template-columns:repeat(2,1fr)}.summary{position:static}.examples{grid-template-columns:1fr}}
-@media(max-width:640px){.header-inner{padding:14px 16px}.pill{display:none}.hero{padding:48px 18px 34px}.features,.section{padding-left:18px;padding-right:18px}.grid-2,.grid-3,.check-grid{grid-template-columns:1fr}.product-preview{grid-template-columns:1fr}.product-art{height:100px}.form-panel,.summary{padding:18px}.actions{grid-template-columns:1fr}.total-price{font-size:32px}}
-@media print{
-  body{background:#fff}.demo-bar,header,.hero,.features,.form-panel,.section-title,.examples,footer,.actions,.notice{display:none!important}
-  .section{padding:0}.sim-grid{display:block}.summary{position:static;box-shadow:none;border:none;max-width:720px;margin:auto}.panel{box-shadow:none}
+a{text-decoration:none;color:inherit}
+.topnote{background:var(--navy);color:#fff;text-align:center;padding:8px 16px;font-size:12px}
+header{
+  position:sticky;top:0;z-index:30;
+  background:rgba(255,255,255,.94);backdrop-filter:blur(15px);
+  border-bottom:1px solid var(--line)
 }
+.header{
+  max-width:1180px;margin:auto;padding:14px 24px;
+  display:flex;justify-content:space-between;align-items:center;gap:18px
+}
+.brand{display:flex;align-items:center;gap:12px;font-weight:900;color:var(--navy)}
+.mark{
+  width:46px;height:46px;border-radius:15px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;
+  font-size:28px;box-shadow:0 10px 24px rgba(23,105,210,.25)
+}
+.brand small{display:block;color:var(--blue);font-size:10px;letter-spacing:.12em}
+.headerlinks{display:flex;gap:10px}
+.headerlinks a{
+  padding:10px 14px;border-radius:12px;border:1px solid var(--line);
+  background:#fff;font-size:12px;font-weight:900
+}
+.headerlinks .primary{background:var(--blue);border-color:var(--blue);color:#fff}
 
-/* QuoteLab98 sales page additions */
-header{position:sticky;top:0;z-index:30;background:#fff}
-.header-inner{max-width:1180px;margin:auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
-.site-nav{display:flex;gap:18px;align-items:center;font-size:13px;font-weight:800;color:var(--navy)}
-.site-nav a{text-decoration:none;color:inherit}
-.site-nav .nav-cta{padding:9px 13px;border-radius:11px;background:var(--blue);color:#fff}
-.sales-hero{background:linear-gradient(135deg,#eaf4ff,#fff5e8);border-bottom:1px solid var(--line)}
-.sales-hero-inner{max-width:1180px;margin:auto;padding:72px 24px 58px;display:grid;grid-template-columns:1.05fr .95fr;gap:42px;align-items:center}
-.sales-hero h1{margin:12px 0 16px;color:var(--navy);font-size:clamp(39px,6vw,64px);line-height:1.08;letter-spacing:-.04em}
-.sales-hero p{color:var(--muted);font-size:17px}
-.hero-points{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:24px 0}
-.hero-point{padding:11px 13px;border-radius:14px;background:#fff;border:1px solid var(--line);font-size:13px;font-weight:800;color:var(--navy)}
-.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
-.sales-btn{display:inline-flex;padding:14px 20px;border-radius:14px;font-weight:900;text-decoration:none}
-.sales-btn.primary{background:var(--blue);color:#fff}
-.sales-btn.secondary{background:#fff;color:var(--navy);border:1px solid var(--line)}
-.browser-card{background:#fff;border:1px solid var(--line);border-radius:26px;padding:22px;box-shadow:var(--shadow)}
-.browser-top{display:flex;gap:7px;padding-bottom:13px}.browser-top i{width:9px;height:9px;border-radius:50%;background:#cbd5e1}
-.browser-screen{padding:18px;border:1px solid var(--line);border-radius:17px}
-.fake-input{height:38px;border-radius:10px;background:#f3f7fb;border:1px solid var(--line);margin:9px 0}
-.fake-total{margin-top:12px;padding:16px;border-radius:14px;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff}
-.fake-total strong{display:block;font-size:29px}
-.sales-section{max-width:1180px;margin:auto;padding:72px 24px}
-.sales-title{text-align:center;margin-bottom:30px}.sales-title h2{margin:0;color:var(--navy);font-size:clamp(28px,4vw,42px)}.sales-title p{margin:7px 0 0;color:var(--muted)}
-.card-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:21px;box-shadow:0 8px 28px rgba(18,54,93,.05)}
-.card b{display:block;color:var(--navy);margin:7px 0 4px}.card p{margin:0;color:var(--muted);font-size:13px}
-.problem-grid{grid-template-columns:repeat(5,1fr)}
-.solution-band{margin-top:26px;padding:28px;border-radius:26px;background:linear-gradient(135deg,#eff7ff,#fff8ec);border:1px solid var(--line)}
-.demo-banner{max-width:1180px;margin:0 auto;padding:0 24px}.demo-banner>div{padding:22px;border-radius:22px;background:#0f2f54;color:#fff}.demo-banner h2{margin:0}.demo-banner p{margin:5px 0 0;color:#c8d8ea}
-.logic-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.logic-card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:19px}
-.logic-card span{display:inline-block;padding:4px 8px;border-radius:999px;background:#e9fbf2;color:#14784f;border:1px solid #b9e8d1;font-size:11px;font-weight:900}
-.logic-card b{display:block;color:var(--navy);margin:8px 0 4px}.logic-card p{margin:0;color:var(--muted);font-size:13px}
-.flow-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
-.flow-card{text-align:center;background:#fff;border:1px solid var(--line);border-radius:17px;padding:18px}
-.flow-no{width:38px;height:38px;margin:0 auto 9px;border-radius:50%;display:grid;place-items:center;background:var(--blue);color:#fff;font-weight:900}
-.flow-card b{color:var(--navy)}.flow-card p{margin:4px 0 0;color:var(--muted);font-size:12px}
-.compare{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:center}
-.compare-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:23px;box-shadow:var(--shadow)}
-.compare-card h3{color:var(--navy)}.compare-row{display:flex;justify-content:space-between;gap:12px;padding:10px;border-radius:10px;background:#f7fbff;margin:8px 0;font-size:13px}
-.compare-arrow{font-size:34px;color:var(--orange)}
-.sales-cta{max-width:1132px;margin:0 auto 70px;padding:40px 24px;border-radius:28px;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;text-align:center}
-.sales-cta h2{margin:0 0 9px;font-size:34px}.sales-cta p{color:#d9e8f8}
-@media(max-width:980px){
- .site-nav{display:none}.sales-hero-inner,.compare{grid-template-columns:1fr}
- .problem-grid,.card-grid,.logic-grid{grid-template-columns:repeat(2,1fr)}
- .flow-grid{grid-template-columns:repeat(3,1fr)}
- .compare-arrow{transform:rotate(90deg);text-align:center}
+.hero{
+  background:
+    radial-gradient(circle at 82% 20%,rgba(77,163,255,.22),transparent 28%),
+    radial-gradient(circle at 12% 82%,rgba(255,154,47,.14),transparent 26%),
+    linear-gradient(135deg,#eef6ff,#fff 48%,#fff8ed);
+  border-bottom:1px solid var(--line)
 }
-@media(max-width:640px){
- .sales-hero-inner,.sales-section{padding-left:18px;padding-right:18px}
- .hero-points,.problem-grid,.card-grid,.logic-grid,.flow-grid{grid-template-columns:1fr}
- .sales-cta{margin-left:18px;margin-right:18px}.sales-cta h2{font-size:27px}
+.hero-inner{
+  max-width:1180px;margin:auto;padding:88px 24px 70px;
+  display:grid;grid-template-columns:1.06fr .94fr;gap:48px;align-items:center
 }
-
-
-.sales-btn.coconala-btn{
-  background:linear-gradient(135deg,#ff8a25,#ffad42);
-  color:#fff;
-  box-shadow:0 12px 28px rgba(255,138,37,.24);
+.eyebrow{color:var(--blue);font-size:12px;font-weight:900;letter-spacing:.14em}
+h1{
+  margin:14px 0 18px;color:var(--navy);
+  font-size:clamp(42px,6.2vw,70px);line-height:1.05;letter-spacing:-.045em
 }
-.coconala-cta-wrap{max-width:1180px;margin:0 auto;padding:18px 24px 72px}
-.coconala-cta{
-  position:relative;overflow:hidden;
-  padding:38px;border-radius:26px;
-  background:linear-gradient(135deg,#0f3158,#1769d2);
-  color:#fff;text-align:center;box-shadow:var(--shadow)
-}
-.coconala-cta:before{
-  content:"";position:absolute;width:260px;height:260px;border-radius:50%;
-  right:-80px;top:-120px;background:rgba(255,255,255,.08)
-}
-.coconala-cta:after{
-  content:"";position:absolute;width:180px;height:180px;border-radius:50%;
-  left:-70px;bottom:-110px;background:rgba(255,154,47,.18)
-}
-.coconala-cta>*{position:relative;z-index:1}
-.coconala-label{
-  display:inline-flex;padding:6px 10px;border-radius:999px;
-  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.24);
-  font-size:12px;font-weight:900
-}
-.coconala-cta h2{margin:12px 0 8px;font-size:clamp(27px,4vw,39px)}
-.coconala-cta p{max-width:720px;margin:0 auto 20px;color:#d9e9fb}
-.coconala-link-btn{
+.hero p{margin:0;color:var(--muted);font-size:17px;max-width:700px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.btn{
   display:inline-flex;align-items:center;justify-content:center;
-  padding:14px 22px;border-radius:14px;background:#fff;color:#12365d;
-  font-weight:950;text-decoration:none
+  min-height:50px;padding:0 20px;border-radius:14px;font-weight:900;
+  border:1px solid transparent;transition:.2s
 }
-.coconala-note{display:block;margin-top:11px;font-size:11px;color:#c9dcf1}
-.floating-coconala{
-  position:fixed;right:18px;bottom:18px;z-index:40;
-  display:inline-flex;align-items:center;gap:7px;
-  padding:13px 16px;border-radius:999px;
-  background:linear-gradient(135deg,#ff8a25,#ffad42);color:#fff;
-  text-decoration:none;font-weight:900;
-  box-shadow:0 12px 30px rgba(56,45,30,.24)
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:linear-gradient(135deg,var(--blue),#0f5ec2);color:#fff;box-shadow:0 14px 30px rgba(23,105,210,.26)}
+.btn-secondary{background:#fff;color:var(--navy);border-color:var(--line)}
+
+.showcase{
+  background:#fff;border:1px solid var(--line);border-radius:30px;
+  padding:22px;box-shadow:var(--shadow)
+}
+.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.mini{
+  min-height:180px;border-radius:20px;padding:18px;position:relative;overflow:hidden
+}
+.mini.reform{background:linear-gradient(145deg,#eaf6ff,#e7f3e5)}
+.mini.moving{background:linear-gradient(145deg,#eef6ff,#fff0dc)}
+.mini span{display:block;color:var(--blue);font-size:11px;font-weight:900;letter-spacing:.08em}
+.mini strong{display:block;margin-top:6px;color:var(--navy);font-size:18px}
+.mini .emoji{position:absolute;right:15px;bottom:8px;font-size:74px;filter:drop-shadow(0 12px 14px rgba(13,27,42,.13))}
+.showcase-note{margin-top:14px;padding:12px 14px;border-radius:13px;background:#eef8f4;color:#0d7855;border:1px solid #c7eadc;font-size:12px;font-weight:900}
+
+.section{max-width:1180px;margin:auto;padding:82px 24px}
+.title{text-align:center;margin-bottom:38px}
+.title span{color:var(--blue);font-size:12px;font-weight:900;letter-spacing:.14em}
+.title h2{margin:8px 0 10px;color:var(--navy);font-size:clamp(30px,4.4vw,46px)}
+.title p{margin:0 auto;max-width:760px;color:var(--muted)}
+
+.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.card{
+  background:#fff;border:1px solid var(--line);border-radius:26px;
+  overflow:hidden;box-shadow:0 12px 38px rgba(13,27,42,.08)
+}
+.cover{height:240px;display:grid;place-items:center;position:relative}
+.cover.reform{background:linear-gradient(145deg,#eaf6ff,#e7f3e5)}
+.cover.moving{background:linear-gradient(145deg,#eef6ff,#fff0dc)}
+.cover .emoji{font-size:104px;filter:drop-shadow(0 18px 18px rgba(13,27,42,.16))}
+.number{position:absolute;left:18px;top:16px;padding:5px 9px;border-radius:999px;background:rgba(255,255,255,.9);color:var(--blue);font-size:11px;font-weight:900}
+.cardbody{padding:26px}
+.cardbody h3{margin:0 0 8px;color:var(--navy);font-size:25px}
+.cardbody p{margin:0 0 17px;color:var(--muted);font-size:14px}
+.tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px}
+.tags span{padding:5px 8px;border-radius:999px;background:#eef6ff;color:var(--blue);border:1px solid #d4e7fb;font-size:11px;font-weight:900}
+.cardactions{display:flex;gap:10px;flex-wrap:wrap}
+.cardactions .btn{min-height:44px;padding:0 16px;font-size:13px}
+
+.dark{background:linear-gradient(135deg,#0d1b2a,#12365d);color:#fff}
+.dark .title h2{color:#fff}.dark .title p{color:#c9d7e7}
+.industry-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.industry{
+  padding:20px;border-radius:18px;background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.12)
+}
+.industry b{display:block;margin:7px 0 4px}
+.industry p{margin:0;color:#c9d7e7;font-size:12px}
+
+.cta{max-width:1132px;margin:0 auto 84px;padding:0 24px}
+.ctabox{
+  text-align:center;color:#fff;padding:48px 28px;border-radius:30px;
+  background:radial-gradient(circle at 85% 20%,rgba(255,255,255,.14),transparent 25%),linear-gradient(135deg,var(--blue),var(--navy));
+  box-shadow:var(--shadow)
+}
+.ctabox h2{margin:0 0 10px;font-size:clamp(30px,4.4vw,44px)}
+.ctabox p{margin:0 auto 22px;max-width:720px;color:#d7e6f8}
+
+footer{background:var(--navy);color:#fff}
+.footer{max-width:1180px;margin:auto;padding:32px 24px;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.footer small{color:#aebfd1}
+
+@media(max-width:960px){
+  .hero-inner,.gallery{grid-template-columns:1fr}
+  .industry-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:640px){
-  .floating-coconala{right:12px;bottom:12px;padding:11px 14px;font-size:13px}
-  .coconala-cta-wrap{padding-left:18px;padding-right:18px}
-  .coconala-cta{padding:30px 19px}
+  .header{padding:12px 16px}.headerlinks a:first-child{display:none}
+  .hero-inner{padding:58px 18px 46px}.section{padding:64px 18px}
+  .mini-grid,.industry-grid{grid-template-columns:1fr}
+  .cta{padding:0 18px}.ctabox{padding:36px 20px}
+  .footer{flex-direction:column;text-align:center}
 }
-@media print{.floating-coconala,.coconala-cta-wrap{display:none!important}}
-
 </style>
 </head>
-<body id="top">
-<div class="demo-bar">架空の料金シミュレーターデモです。実在する企業・商品・料金とは関係ありません。</div>
-
+<body>
+<div class="topnote">QuoteLabオリジナルの操作デモ一覧です。掲載価格・条件はすべて架空です。</div>
 
 <header>
-  <div class="header-inner">
-    <div class="brand"><div class="mark">Q</div><div>QuoteLab98<small>QUOTE & WEB TOOL STUDIO</small></div></div>
-    <nav class="site-nav">
-      <a href="#problems">お悩み</a><a href="#tools">制作内容</a><a href="#simulator">操作デモ</a>
-      <a href="#logic">対応機能</a><a href="#flow">制作の流れ</a><a class="nav-cta" href="https://coconala.com/services/4339390" target="_blank" rel="noopener noreferrer">ココナラで相談</a>
-    </nav>
+  <div class="header">
+    <a class="brand" href="https://quotelab98.github.io/">
+      <div class="mark">Q</div>
+      <div>QuoteLab<small>DEMO GALLERY</small></div>
+    </a>
+    <div class="headerlinks">
+      <a href="https://quotelab98.github.io/">公式サイトへ</a>
+      <a class="primary" href="https://coconala.com/services/4339390" target="_blank" rel="noopener noreferrer">ココナラで相談</a>
+    </div>
   </div>
 </header>
 
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow">QUOTE LAB SHOWROOM</div>
+      <h1>実際に触って試せる<br>料金シミュレーター。</h1>
+      <p>業種ごとの料金計算や条件分岐を、ブラウザ上でそのまま体験できます。QuoteLabが制作できる機能と操作感をご覧ください。</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#demos">デモを見る</a>
+        <a class="btn btn-secondary" href="https://quotelab98.github.io/">公式サイトへ戻る</a>
+      </div>
+    </div>
+
+    <div class="showcase">
+      <div class="mini-grid">
+        <div class="mini reform">
+          <span>DEMO 01</span>
+          <strong>リフォーム概算</strong>
+          <div class="emoji">🏠</div>
+        </div>
+        <div class="mini moving">
+          <span>DEMO 02</span>
+          <strong>引越し料金</strong>
+          <div class="emoji">🚚</div>
+        </div>
+      </div>
+      <div class="showcase-note">リアルタイム計算・条件分岐・割引・PDF保存などを確認できます。</div>
+    </div>
+  </div>
+</section>
 
 <main>
+<section class="section" id="demos">
+  <div class="title">
+    <span>LIVE DEMOS</span>
+    <h2>業種別デモ</h2>
+    <p>各デモはQuoteLabが独自に制作した架空のサンプルです。実際のサービスや企業データは使用していません。</p>
+  </div>
 
-<section class="sales-hero">
-  <div class="sales-hero-inner">
-    <div>
-      <div class="eyebrow">● WEBSITE PRICE SIMULATOR</div>
-      <h1>ホームページに埋め込める<br>料金シミュレーターを制作します</h1>
-      <p>見積りの手計算、複雑な料金表、問い合わせ対応の負担を軽くする、オリジナルの料金・見積シミュレーターを制作します。</p>
-      <div class="hero-points">
-        <div class="hero-point">✓ 数量別単価・割引対応</div><div class="hero-point">✓ 複数オプション対応</div>
-        <div class="hero-point">✓ スマートフォン対応</div><div class="hero-point">✓ HTML形式で納品</div>
+  <div class="gallery">
+    <article class="card">
+      <div class="cover reform">
+        <span class="number">DEMO 01</span>
+        <div class="emoji">🏠</div>
       </div>
-      <div class="hero-actions">
-        <a class="sales-btn primary" href="#simulator">実際にデモを操作する</a>
-        <a class="sales-btn secondary" href="#logic">対応機能を見る</a>
-        <a class="sales-btn coconala-btn" href="https://coconala.com/services/4339390" target="_blank" rel="noopener noreferrer">ココナラで相談する ↗</a>
+      <div class="cardbody">
+        <h3>リフォーム概算シミュレーター</h3>
+        <p>建物タイプ、面積、壁紙、床材、水回り設備、追加工事を選択すると、概算費用と内訳がリアルタイムに更新されます。</p>
+        <div class="tags">
+          <span>面積連動</span><span>設備オプション</span><span>割合加算</span><span>自動割引</span><span>PDF保存</span>
+        </div>
+        <div class="cardactions">
+          <a class="btn btn-primary" href="./reform/">デモを操作する</a>
+          <a class="btn btn-secondary" href="https://coconala.com/services/4339390" target="_blank" rel="noopener noreferrer">制作を相談</a>
+        </div>
       </div>
+    </article>
+
+    <article class="card">
+      <div class="cover moving">
+        <span class="number">DEMO 02</span>
+        <div class="emoji">🚚</div>
+      </div>
+      <div class="cardbody">
+        <h3>引越し料金シミュレーター</h3>
+        <p>間取り、移動距離、荷物量、建物条件、希望日、オプションから、概算料金と各種割引を自動計算します。</p>
+        <div class="tags">
+          <span>距離連動</span><span>建物条件</span><span>日程加算</span><span>複数割引</span><span>PDF保存</span>
+        </div>
+        <div class="cardactions">
+          <a class="btn btn-primary" href="./moving/">デモを操作する</a>
+          <a class="btn btn-secondary" href="https://coconala.com/services/4339390" target="_blank" rel="noopener noreferrer">制作を相談</a>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="dark">
+  <div class="section">
+    <div class="title">
+      <span>SUPPORTED IDEAS</span>
+      <h2>幅広い業種に応用できます</h2>
+      <p>料金表や計算条件に合わせて、入力項目・デザイン・ロジックを個別に設計します。</p>
     </div>
-    <div class="browser-card">
-      <div class="browser-top"><i></i><i></i><i></i></div>
-      <div class="browser-screen">
-        <b style="color:var(--navy)">料金シミュレーター</b>
-        <div class="fake-input"></div><div class="fake-input"></div><div class="fake-input"></div>
-        <div class="fake-total"><small>概算合計</small><strong>98,450円</strong><span>割引・オプション反映済み</span></div>
-      </div>
+    <div class="industry-grid">
+      <div class="industry">🏠<b>住宅・リフォーム</b><p>面積、設備、工事内容を組み合わせた概算。</p></div>
+      <div class="industry">🚚<b>引越し・配送</b><p>距離、荷物量、日時、地域条件を反映。</p></div>
+      <div class="industry">🎁<b>ノベルティ・印刷</b><p>数量、サイズ、色数、加工、送料を計算。</p></div>
+      <div class="industry">🏢<b>建築・内装</b><p>施工範囲、素材、設備、追加工事を加算。</p></div>
+      <div class="industry">🧹<b>クリーニング</b><p>部屋数、清掃箇所、汚れ、オプション対応。</p></div>
+      <div class="industry">🚗<b>自動車サービス</b><p>車種、サイズ、施工内容、コースを選択。</p></div>
+      <div class="industry">💇<b>美容・サロン</b><p>メニュー、長さ、指名、追加施術を計算。</p></div>
+      <div class="industry">⚙️<b>オーダーメイド</b><p>独自の料金表や条件分岐にも柔軟に対応。</p></div>
     </div>
-  </div>
-</section>
-
-
-<section class="features">
-  <div class="feature">📊<b>価格テーブル連動</b><span>数量に応じて単価を自動切替</span></div>
-  <div class="feature">🎨<b>色数・仕様加算</b><span>組み合わせ条件を細かく反映</span></div>
-  <div class="feature">🏷️<b>複数割引を併用</b><span>数量・会員・キャンペーン・クーポン</span></div>
-  <div class="feature">🧾<b>見積書として印刷</b><span>ブラウザからPDF保存にも対応</span></div>
-</section>
-
-
-<section class="sales-section" id="problems">
-  <div class="sales-title"><h2>こんなお悩みはありませんか？</h2><p>料金計算に人の手が必要なほど、時間とミスのリスクが積み上がります。</p></div>
-  <div class="card-grid problem-grid">
-    <div class="card">🧮<b>毎回手計算</b><p>Excelや電卓で同じ計算を繰り返している。</p></div>
-    <div class="card">📞<b>問い合わせが集中</b><p>概算金額の確認だけで対応が増える。</p></div>
-    <div class="card">📊<b>料金表が複雑</b><p>数量・サイズ・加工の組み合わせが多い。</p></div>
-    <div class="card">👤<b>担当者に依存</b><p>詳しい人しか見積りを作れない。</p></div>
-    <div class="card">⚠️<b>計算ミスが心配</b><p>割引やオプションの反映漏れが起こる。</p></div>
-  </div>
-  <div class="solution-band">
-    <div class="sales-title"><h2>料金シミュレーターで解決</h2></div>
-    <div class="card-grid problem-grid">
-      <div class="card">⚡<b>即時に自動計算</b><p>条件を選ぶだけで金額を表示。</p></div>
-      <div class="card">🕒<b>対応時間を短縮</b><p>概算確認のやり取りを削減。</p></div>
-      <div class="card">🎯<b>計算ルールを統一</b><p>担当者による金額差を防止。</p></div>
-      <div class="card">📱<b>24時間確認可能</b><p>お客様自身がスマホから試算。</p></div>
-      <div class="card">✨<b>相談を具体化</b><p>予算を把握した問い合わせにつながる。</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="sales-section" id="tools">
-  <div class="sales-title"><h2>制作できるWebツール</h2><p>料金計算を中心に、問い合わせ前後の業務を軽くする仕組みを制作します。</p></div>
-  <div class="card-grid">
-    <div class="card">💰<b>料金シミュレーター</b><p>複数条件から概算金額を自動計算。</p></div>
-    <div class="card">🧾<b>見積フォーム</b><p>入力条件と計算結果をまとめて整理。</p></div>
-    <div class="card">🛒<b>注文フォーム</b><p>商品仕様や数量を選択して注文内容を明確化。</p></div>
-    <div class="card">➕<b>オプション計算</b><p>選択内容に応じた追加料金を反映。</p></div>
-    <div class="card">🏷️<b>キャンペーン価格</b><p>期間割引・会員価格・クーポンに対応。</p></div>
-    <div class="card">📦<b>送料計算</b><p>地域・数量・条件で送料を切替。</p></div>
-    <div class="card">📄<b>PDF見積書</b><p>試算内容を印刷・PDF保存。</p></div>
-    <div class="card">📱<b>スマホ対応</b><p>画面幅に合わせて見やすく表示。</p></div>
-  </div>
-</section>
-
-<div class="demo-banner"><div><h2>実際に操作できるデモ</h2><p>商品、数量、加工、オプション、割引、クーポンを変更すると、見積りがリアルタイムに更新されます。</p></div></div>
-
-<section class="section" id="simulator">
-  <div class="section-title">
-    <h2>高機能料金シミュレーター</h2>
-    <p>選択内容に応じて商品イメージ、単価、割引、合計金額がリアルタイムで変わります。</p>
-  </div>
-
-  <div class="sim-grid">
-    <div class="panel form-panel">
-      <div class="form-section">
-        <h3>1. 商品・サイズ・数量</h3>
-        <p class="note">商品を変更すると、イメージと基本料金が切り替わります。</p>
-
-        <div class="product-preview">
-          <div class="product-art" id="productArt">🔑</div>
-          <div>
-            <h4 id="productName">アクリルキーホルダー</h4>
-            <p id="productDescription">定番のオリジナルグッズ。サイズ、形状、印刷仕様を自由に組み合わせる想定です。</p>
-          </div>
-        </div>
-
-        <div class="grid-3">
-          <div>
-            <label for="product">商品タイプ</label>
-            <select id="product">
-              <option value="keyholder">アクリルキーホルダー</option>
-              <option value="stand">アクリルスタンド</option>
-              <option value="badge">缶バッジ</option>
-              <option value="rubber">PVCラバーストラップ</option>
-              <option value="coaster">オリジナルコースター</option>
-            </select>
-          </div>
-          <div>
-            <label for="size">商品サイズ</label>
-            <select id="size">
-              <option value="small">50mm以内</option>
-              <option value="medium">70mm以内</option>
-              <option value="large">90mm以内</option>
-              <option value="xlarge">100mm超</option>
-            </select>
-          </div>
-          <div>
-            <label for="quantity">注文数量</label>
-            <input id="quantity" type="number" min="10" max="3000" value="100">
-          </div>
-        </div>
-
-        <table class="price-table">
-          <thead><tr><th>ロット</th><th>基本単価</th><th>適用状況</th></tr></thead>
-          <tbody>
-            <tr id="tier10"><td>10〜49個</td><td id="price10">780円</td><td></td></tr>
-            <tr id="tier50"><td>50〜99個</td><td id="price50">690円</td><td></td></tr>
-            <tr id="tier100"><td>100〜299個</td><td id="price100">620円</td><td></td></tr>
-            <tr id="tier300"><td>300〜499個</td><td id="price300">570円</td><td></td></tr>
-            <tr id="tier500"><td>500〜999個</td><td id="price500">520円</td><td></td></tr>
-            <tr id="tier1000"><td>1,000個以上</td><td id="price1000">470円</td><td></td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="form-section">
-        <h3>2. 本体仕様</h3>
-        <div class="grid-3">
-          <div><label for="material">素材・厚み</label>
-            <select id="material"><option value="0">標準素材</option><option value="60">厚手素材</option><option value="110">高透明素材</option><option value="170">特殊カラー素材</option></select>
-          </div>
-          <div><label for="shape">形状</label>
-            <select id="shape"><option value="0">定型</option><option value="80">自由形状</option><option value="150">複雑形状</option></select>
-          </div>
-          <div><label for="layers">構造</label>
-            <select id="layers"><option value="0">1層</option><option value="90">2層</option><option value="180">3層</option><option value="320">立体・3D</option></select>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-section">
-        <h3>3. 印刷・色数・加工</h3>
-        <p class="note">色数と加工方法に応じて、1個あたりの料金が加算されます。</p>
-        <div class="grid-3">
-          <div><label for="printSide">印刷面</label>
-            <select id="printSide"><option value="90">片面</option><option value="170">両面</option><option value="260">両面＋別デザイン</option></select>
-          </div>
-          <div><label for="colors">カラー数</label>
-            <select id="colors"><option value="0">1色</option><option value="35">2色</option><option value="70">3色</option><option value="105">4色</option><option value="160">フルカラー</option></select>
-          </div>
-          <div><label for="surface">表面加工</label>
-            <select id="surface"><option value="0">加工なし</option><option value="60">マット</option><option value="85">グロス</option><option value="145">ホログラム</option><option value="220">特殊箔</option></select>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-section">
-        <h3>4. オプション</h3>
-        <p class="note">「一律加算」「数量×単価」「小計に対する割合加算」の3種類を混在できます。</p>
-        <div class="check-grid">
-          <label class="check"><input class="flat" type="checkbox" value="3000"><span><b>入稿データチェック</b><small>一律 +3,000円</small></span></label>
-          <label class="check"><input class="flat" type="checkbox" value="8000"><span><b>データ修正サポート</b><small>一律 +8,000円</small></span></label>
-          <label class="check"><input class="flat" type="checkbox" value="15000"><span><b>デザイン新規制作</b><small>一律 +15,000円</small></span></label>
-          <label class="check"><input class="flat" type="checkbox" value="5000"><span><b>試作サンプル</b><small>一律 +5,000円</small></span></label>
-          <label class="check"><input class="peritem" type="checkbox" value="35"><span><b>個別OPP包装</b><small>数量 × 35円</small></span></label>
-          <label class="check"><input class="peritem" type="checkbox" value="55"><span><b>台紙封入</b><small>数量 × 55円</small></span></label>
-          <label class="check"><input class="peritem" type="checkbox" value="90"><span><b>個別名入れ</b><small>数量 × 90円</small></span></label>
-          <label class="check"><input class="rate" type="checkbox" value="0.08"><span><b>特急制作</b><small>対象小計の 8%</small></span></label>
-        </div>
-      </div>
-
-      <div class="form-section">
-        <h3>5. 割引設定</h3>
-        <div class="discount-box">
-          <div class="check-grid">
-            <label class="check"><input id="member" type="checkbox"><span><b>会員割引 2%</b><small>数量割引後の金額から割引</small></span></label>
-            <label class="check"><input id="campaign" type="checkbox"><span><b>WEB限定割引 3%</b><small>期間限定キャンペーン想定</small></span></label>
-          </div>
-          <div style="margin-top:15px">
-            <label for="coupon">クーポンコード</label>
-            <div class="coupon-row">
-              <input id="coupon" type="text" placeholder="例：DEMO5">
-              <button id="couponBtn" class="coupon-btn" type="button">適用</button>
-            </div>
-            <div id="couponStatus" class="coupon-status">デモコード：DEMO5（5%OFF）／WEB10（10%OFF・上限10,000円）</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <aside class="panel summary">
-      <h3>概算お見積り</h3>
-      <div class="summary-row"><span>商品本体</span><b id="bodySubtotal">0円</b></div>
-      <div class="summary-row"><span>印刷・加工</span><b id="processingSubtotal">0円</b></div>
-      <div class="summary-row"><span>固定オプション</span><b id="flatSubtotal">0円</b></div>
-      <div class="summary-row"><span>数量連動オプション</span><b id="perItemSubtotal">0円</b></div>
-      <div class="summary-row"><span>割合加算</span><b id="rateSubtotal">0円</b></div>
-      <div class="summary-row"><span>数量割引</span><b class="discount" id="quantityDiscount">-0円</b></div>
-      <div class="summary-row"><span>会員割引</span><b class="discount" id="memberDiscount">-0円</b></div>
-      <div class="summary-row"><span>キャンペーン割引</span><b class="discount" id="campaignDiscount">-0円</b></div>
-      <div class="summary-row"><span>クーポン割引</span><b class="discount" id="couponDiscount">-0円</b></div>
-
-      <div class="total-box">
-        <small>概算合計（税込）</small>
-        <div class="total-price" id="totalPrice">0円</div>
-        <div class="unit-price" id="unitPrice">1個あたり 0円</div>
-        <div class="badges" id="badges"></div>
-      </div>
-
-      <div class="chart">
-        <div class="chart-row">
-          <div class="chart-label"><span>通常価格</span><b id="normalLabel">0円</b></div>
-          <div class="bar"><span id="normalBar"></span></div>
-        </div>
-        <div class="chart-row">
-          <div class="chart-label"><span>割引合計</span><b id="discountLabel">0円</b></div>
-          <div class="bar"><span id="discountBar"></span></div>
-        </div>
-        <div class="chart-row">
-          <div class="chart-label"><span>割引後価格</span><b id="finalLabel">0円</b></div>
-          <div class="bar"><span id="finalBar"></span></div>
-        </div>
-      </div>
-
-      <div id="minimum" class="minimum">最低注文金額は税込30,000円です。</div>
-
-      <div class="actions">
-        <button type="button" class="action-btn print-btn" onclick="window.print()">見積書を印刷・PDF保存</button>
-        <button type="button" class="action-btn reset-btn" id="resetBtn">入力内容をリセット</button>
-      </div>
-
-      <div class="notice">
-        デモ用の架空料金です。実際の制作では、料金表、端数処理、最低金額、割引上限、組み合わせ不可条件なども個別に設定できます。
-      </div>
-    </aside>
-  </div>
-</section>
-
-<section class="section">
-  <div class="section-title"><h2>このデモで確認できる機能</h2><p>見た目だけではなく、実務で使われる料金ロジックを複数組み込んでいます。</p></div>
-  <div class="examples">
-    <div class="example">📈<h3>ロット別単価</h3><p>数量帯ごとに単価を切り替え、現在適用中の価格帯を表で表示します。</p></div>
-    <div class="example">🧮<h3>異なる加算方式</h3><p>固定料金、数量×単価、割合加算を同じ見積りの中で計算します。</p></div>
-    <div class="example">🏷️<h3>段階的な割引</h3><p>数量、会員、キャンペーン、クーポンを順番に適用し、割引額を個別表示します。</p></div>
   </div>
 </section>
 </main>
 
-<footer><div class="footer-inner"><b>QuoteLab98</b><br><small>料金シミュレーター・見積フォーム・Web業務効率化ツール</small></div></footer>
+<section class="cta">
+  <div class="ctabox">
+    <h2>あなた専用の料金シミュレーターを制作します</h2>
+    <p>「この料金表をWebで自動計算したい」「この条件分岐は作れる？」という段階からご相談いただけます。</p>
+    <div class="hero-actions" style="justify-content:center">
+      <a class="btn btn-secondary" href="https://coconala.com/services/4339390" target="_blank" rel="noopener noreferrer">ココナラで相談する ↗</a>
+      <a class="btn btn-secondary" href="https://quotelab98.github.io/">公式サイトへ戻る</a>
+    </div>
+  </div>
+</section>
 
-<script>
-const yen = n => Math.round(n).toLocaleString('ja-JP') + '円';
-
-const products = {
-  keyholder:{name:'アクリルキーホルダー',art:'🔑',desc:'定番のオリジナルグッズ。サイズ、形状、印刷仕様を自由に組み合わせる想定です。',prices:[780,690,620,570,520,470]},
-  stand:{name:'アクリルスタンド',art:'🧍',desc:'台座付きのディスプレイ商品。大きさや構造による価格差を表現できます。',prices:[980,880,790,720,660,590]},
-  badge:{name:'缶バッジ',art:'🔘',desc:'小ロットから大量生産まで、数量帯による単価変化が大きい商品例です。',prices:[420,350,310,280,250,220]},
-  rubber:{name:'PVCラバーストラップ',art:'🧩',desc:'色数や階層、立体表現など複雑な加工条件を想定した商品例です。',prices:[1180,1040,930,850,780,710]},
-  coaster:{name:'オリジナルコースター',art:'☕',desc:'素材、サイズ、表面加工による価格差を見せやすい商品例です。',prices:[680,610,550,510,470,430]}
-};
-const sizeAdd={small:0,medium:70,large:140,xlarge:240};
-let activeCoupon={rate:0,cap:Infinity,label:''};
-
-function tierInfo(q){
-  if(q>=1000) return {index:5,id:'tier1000',rate:.15,label:'数量割引 15%'};
-  if(q>=500) return {index:4,id:'tier500',rate:.10,label:'数量割引 10%'};
-  if(q>=300) return {index:3,id:'tier300',rate:.08,label:'数量割引 8%'};
-  if(q>=100) return {index:2,id:'tier100',rate:.05,label:'数量割引 5%'};
-  if(q>=50) return {index:1,id:'tier50',rate:.03,label:'数量割引 3%'};
-  return {index:0,id:'tier10',rate:0,label:''};
-}
-function val(id){return Number(document.getElementById(id).value)}
-function checkedSum(selector){return [...document.querySelectorAll(selector+':checked')].reduce((s,e)=>s+Number(e.value),0)}
-
-function updateProduct(){
-  const p=products[document.getElementById('product').value];
-  document.getElementById('productArt').textContent=p.art;
-  document.getElementById('productName').textContent=p.name;
-  document.getElementById('productDescription').textContent=p.desc;
-  ['price10','price50','price100','price300','price500','price1000'].forEach((id,i)=>document.getElementById(id).textContent=yen(p.prices[i]));
-}
-
-function calculate(){
-  updateProduct();
-  const qty=Math.max(10,Math.min(3000,Number(document.getElementById('quantity').value)||10));
-  document.getElementById('quantity').value=qty;
-
-  const p=products[document.getElementById('product').value];
-  const tier=tierInfo(qty);
-  document.querySelectorAll('.price-table tbody tr').forEach(tr=>{tr.classList.remove('active-tier');tr.cells[2].textContent=''});
-  const activeRow=document.getElementById(tier.id); activeRow.classList.add('active-tier'); activeRow.cells[2].textContent='適用中';
-
-  const unitBase=p.prices[tier.index]+sizeAdd[document.getElementById('size').value]+val('material')+val('shape')+val('layers');
-  const body=unitBase*qty;
-  const processing=(val('printSide')+val('colors')+val('surface'))*qty;
-  const flat=checkedSum('.flat');
-  const perItem=checkedSum('.peritem')*qty;
-  const baseBeforeRate=body+processing+flat+perItem;
-  const rateAdd=baseBeforeRate*checkedSum('.rate');
-  const normal=baseBeforeRate+rateAdd;
-
-  const quantityDisc=normal*tier.rate;
-  let after=normal-quantityDisc;
-  const memberRate=document.getElementById('member').checked?.02:0;
-  const memberDisc=after*memberRate; after-=memberDisc;
-  const campaignRate=document.getElementById('campaign').checked?.03:0;
-  const campaignDisc=after*campaignRate; after-=campaignDisc;
-  const couponDisc=Math.min(after*activeCoupon.rate,activeCoupon.cap); after-=couponDisc;
-
-  const taxIncluded=after*1.10;
-  const minimum=30000;
-  const finalTotal=Math.max(taxIncluded,minimum);
-  const minimumApplied=taxIncluded<minimum;
-  const discountTotal=quantityDisc+memberDisc+campaignDisc+couponDisc;
-
-  document.getElementById('bodySubtotal').textContent=yen(body);
-  document.getElementById('processingSubtotal').textContent=yen(processing);
-  document.getElementById('flatSubtotal').textContent=yen(flat);
-  document.getElementById('perItemSubtotal').textContent=yen(perItem);
-  document.getElementById('rateSubtotal').textContent=yen(rateAdd);
-  document.getElementById('quantityDiscount').textContent='-'+yen(quantityDisc);
-  document.getElementById('memberDiscount').textContent='-'+yen(memberDisc);
-  document.getElementById('campaignDiscount').textContent='-'+yen(campaignDisc);
-  document.getElementById('couponDiscount').textContent='-'+yen(couponDisc);
-  document.getElementById('totalPrice').textContent=yen(finalTotal);
-  document.getElementById('unitPrice').textContent='1個あたり '+yen(finalTotal/qty);
-
-  const badges=[];
-  if(tier.rate) badges.push(tier.label+' 適用中');
-  if(memberRate) badges.push('会員割引 2% 適用中');
-  if(campaignRate) badges.push('WEB限定 3% 適用中');
-  if(activeCoupon.rate) badges.push(activeCoupon.label+' 適用中');
-  if(minimumApplied) badges.push('最低注文金額を適用');
-  document.getElementById('badges').innerHTML=badges.length?badges.map(x=>'<span class="badge">'+x+'</span>').join(''):'<span class="badge">割引未適用</span>';
-
-  const minimumBox=document.getElementById('minimum');
-  minimumBox.className='minimum'+(minimumApplied?'':' ok');
-  minimumBox.textContent=minimumApplied?'最低注文金額（税込30,000円）が適用されています。':'最低注文金額をクリアしています。';
-
-  const max=Math.max(normal*1.10,finalTotal,1);
-  document.getElementById('normalLabel').textContent=yen(normal*1.10);
-  document.getElementById('discountLabel').textContent='-'+yen(discountTotal*1.10);
-  document.getElementById('finalLabel').textContent=yen(finalTotal);
-  document.getElementById('normalBar').style.width=(normal*1.10/max*100)+'%';
-  document.getElementById('discountBar').style.width=Math.min(100,discountTotal*1.10/max*100)+'%';
-  document.getElementById('finalBar').style.width=(finalTotal/max*100)+'%';
-}
-
-document.getElementById('couponBtn').addEventListener('click',()=>{
-  const code=document.getElementById('coupon').value.trim().toUpperCase();
-  const status=document.getElementById('couponStatus');
-  if(code==='DEMO5'){activeCoupon={rate:.05,cap:Infinity,label:'DEMO5 5%OFF'};status.className='coupon-status ok';status.textContent='クーポン DEMO5 を適用しました。';}
-  else if(code==='WEB10'){activeCoupon={rate:.10,cap:10000,label:'WEB10 10%OFF'};status.className='coupon-status ok';status.textContent='クーポン WEB10 を適用しました（割引上限10,000円）。';}
-  else if(code===''){activeCoupon={rate:0,cap:Infinity,label:''};status.className='coupon-status';status.textContent='クーポンを解除しました。';}
-  else{activeCoupon={rate:0,cap:Infinity,label:''};status.className='coupon-status ng';status.textContent='使用できないクーポンコードです。';}
-  calculate();
-});
-
-document.getElementById('resetBtn').addEventListener('click',()=>{
-  document.querySelectorAll('select').forEach(s=>s.selectedIndex=0);
-  document.querySelectorAll('input[type="checkbox"]').forEach(c=>c.checked=false);
-  document.getElementById('quantity').value=100;
-  document.getElementById('coupon').value='';
-  activeCoupon={rate:0,cap:Infinity,label:''};
-  document.getElementById('couponStatus').className='coupon-status';
-  document.getElementById('couponStatus').textContent='デモコード：DEMO5（5%OFF）／WEB10（10%OFF・上限10,000円）';
-  calculate();
-});
-
-document.querySelectorAll('select,input').forEach(el=>{
-  el.addEventListener('input',calculate);
-  el.addEventListener('change',calculate);
-});
-calculate();
-</script>
-
-<a class="floating-coconala" href="https://coconala.com/services/4339390" target="_blank" rel="noopener noreferrer" aria-label="ココナラで相談する">
-  💬 ココナラで相談
-</a>
-
+<footer>
+  <div class="footer">
+    <div class="brand"><div class="mark">Q</div><div style="color:#fff">QuoteLab<small>SMART WEB TOOLS</small></div></div>
+    <small>© 2026 QuoteLab Demo Gallery.</small>
+  </div>
+</footer>
 </body>
 </html>
