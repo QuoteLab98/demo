@@ -80,7 +80,7 @@ select:focus,input:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(23,1
 .minimum{margin-top:14px;padding:11px 12px;border-radius:12px;background:#fff4e5;color:#8a5a00;font-size:12px}.minimum.ok{background:#eaf9f1;color:#13784f}
 .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.action-btn{border:0;border-radius:13px;padding:13px 10px;font-weight:900;cursor:pointer}.print-btn{background:var(--blue);color:#fff}.reset-btn{background:#edf2f7;color:var(--navy)}
 .notice{margin-top:14px;padding:12px;border-radius:12px;background:#f8fafc;color:var(--muted);font-size:11px;border:1px solid var(--line)}
-.examples{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.example{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px}.example h3{margin:7px 0 5px;color:var(--navy)}.example p{margin:0;color:var(--muted);font-size:14px}
+.examples{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.example{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px}.example h3{margin:7px 0 5px;color:var(--navy)}.example p{margin:0;color:var(--muted);font-size:14px}.consult-box{text-align:center;padding:42px 24px;border-radius:24px;background:linear-gradient(135deg,var(--blue),var(--navy));color:#fff}.consult-box h2{margin:0 0 8px;font-size:clamp(28px,4vw,40px)}.consult-box p{margin:0 auto 22px;max-width:700px;color:#dbeafe}.consult-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}.consult-link{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 18px;border-radius:13px;background:#fff;text-decoration:none;font-weight:900}.consult-link.coconala{color:#008f83}.consult-link.lancers{color:#0d57a7}.consult-link.back{color:var(--navy)}
 footer{margin-top:40px;background:#0d2949;color:#fff}.footer-inner{max-width:1180px;margin:auto;padding:34px 24px;text-align:center}.footer-inner small{color:#b8c8da}
 @media(max-width:920px){.hero,.sim-grid{grid-template-columns:1fr}.features{grid-template-columns:repeat(2,1fr)}.summary{position:static}.examples{grid-template-columns:1fr}}
 @media(max-width:640px){.header-inner{padding:14px 16px}.pill{display:none}.hero{padding:48px 18px 34px}.features,.section{padding-left:18px;padding-right:18px}.grid-2,.grid-3,.check-grid{grid-template-columns:1fr}.product-preview{grid-template-columns:1fr}.product-art{height:100px}.form-panel,.summary{padding:18px}.actions{grid-template-columns:1fr}.total-price{font-size:32px}}
@@ -98,7 +98,7 @@ footer{margin-top:40px;background:#0d2949;color:#fff}.footer-inner{max-width:118
     <div style="display:flex;gap:8px;flex-wrap:wrap;">
       <a href="../" style="color:#0d2949;background:#fff;text-decoration:none;padding:7px 11px;border-radius:9px;font-size:12px;font-weight:800;">← デモ一覧</a>
       <a href="https://quotelab98.github.io/" style="color:#fff;border:1px solid rgba(255,255,255,.35);text-decoration:none;padding:7px 11px;border-radius:9px;font-size:12px;font-weight:800;">公式サイト</a>
-      <a href="https://coconala.com/services/4339390" target="_blank" rel="noopener noreferrer" style="color:#fff;background:#ff9a2f;text-decoration:none;padding:7px 11px;border-radius:9px;font-size:12px;font-weight:800;">ココナラで相談</a>
+      <a href="#consult" style="color:#fff;background:#ff9a2f;text-decoration:none;padding:7px 11px;border-radius:9px;font-size:12px;font-weight:800;">制作を相談</a>
     </div>
   </div>
 </div>
@@ -315,6 +315,18 @@ footer{margin-top:40px;background:#0d2949;color:#fff}.footer-inner{max-width:118
     <div class="example">📈<h3>ロット別単価</h3><p>数量帯ごとに単価を切り替え、現在適用中の価格帯を表で表示します。</p></div>
     <div class="example">🧮<h3>異なる加算方式</h3><p>固定料金、数量×単価、割合加算を同じ見積りの中で計算します。</p></div>
     <div class="example">🏷️<h3>段階的な割引</h3><p>数量、会員、キャンペーン、クーポンを順番に適用し、割引額を個別表示します。</p></div>
+  </div>
+</section>
+
+<section class="section" id="consult">
+  <div class="consult-box">
+    <h2>このような料金シミュレーターを制作します</h2>
+    <p>「この料金表でも自動計算できますか？」という段階からご相談いただけます。ご利用しやすいサービスをお選びください。</p>
+    <div class="consult-actions">
+      <a class="consult-link coconala" href="https://coconala.com/services/4339390" target="_blank" rel="noopener noreferrer">ココナラで相談する ↗</a>
+      <a class="consult-link lancers" href="https://www.lancers.jp/menu/detail/1337447" target="_blank" rel="noopener noreferrer">ランサーズで相談する ↗</a>
+      <a class="consult-link back" href="../">デモ一覧へ戻る</a>
+    </div>
   </div>
 </section>
 </main>
