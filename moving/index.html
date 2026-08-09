@@ -84,7 +84,7 @@ select,input[type=number]{width:100%;height:48px;border:1px solid #cdd9e7;border
 .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
 .actions button{border:0;border-radius:13px;padding:13px;font-weight:900;cursor:pointer}
 .print{background:var(--blue);color:#fff}.reset{background:#eef2f6;color:var(--navy)}
-.notice{margin-top:14px;padding:12px;border-radius:12px;background:#fff8e8;border:1px solid #f3dfae;color:#7a5a10;font-size:11px}
+.notice{margin-top:14px;padding:12px;border-radius:12px;background:#fff8e8;border:1px solid #f3dfae;color:#7a5a10;font-size:11px}.consult{max-width:1180px;margin:0 auto 64px;padding:0 24px}.consult-box{text-align:center;padding:42px 24px;border-radius:24px;background:linear-gradient(135deg,var(--blue),var(--navy));color:#fff}.consult-box h2{margin:0 0 8px;font-size:clamp(27px,4vw,40px)}.consult-box p{margin:0 auto 22px;max-width:700px;color:#dbeafe}.consult-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}.consult-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 18px;border-radius:13px;background:#fff;font-weight:900}.consult-actions .coconala{color:#008f83}.consult-actions .lancers{color:#0d57a7}.consult-actions .back{color:var(--navy)}
 footer{background:var(--navy);color:#fff}
 .footer{max-width:1180px;margin:auto;padding:30px 24px;display:flex;justify-content:space-between;align-items:center}
 .footer small{color:#aebfd1}
@@ -103,7 +103,7 @@ footer{background:var(--navy);color:#fff}
     </a>
     <div class="headlinks">
       <a href="../">デモ一覧へ</a>
-      <a class="primary" href="https://coconala.com/services/4339390" target="_blank" rel="noopener">ココナラで相談</a>
+      <a class="primary" href="#consult">制作を相談</a>
     </div>
   </div>
 </header>
@@ -269,6 +269,18 @@ footer{background:var(--navy);color:#fff}
     </aside>
   </div>
 </main>
+
+<section class="consult" id="consult">
+  <div class="consult-box">
+    <h2>このような料金シミュレーターを制作します</h2>
+    <p>「自社の料金条件でも自動計算できますか？」という段階からご相談いただけます。ご利用しやすいサービスをお選びください。</p>
+    <div class="consult-actions">
+      <a class="coconala" href="https://coconala.com/services/4339390" target="_blank" rel="noopener noreferrer">ココナラで相談する ↗</a>
+      <a class="lancers" href="https://www.lancers.jp/menu/detail/1337447" target="_blank" rel="noopener noreferrer">ランサーズで相談する ↗</a>
+      <a class="back" href="../">デモ一覧へ戻る</a>
+    </div>
+  </div>
+</section>
 
 <footer>
   <div class="footer">
